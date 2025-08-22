@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ev_assist/l10n/app_localizations.dart';
@@ -50,6 +51,8 @@ class LocaleProvider extends ChangeNotifier {
 // --- MAIN ---
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   runApp(
     MultiProvider(
       providers: [
@@ -77,13 +80,19 @@ class EvAssistApp extends StatelessWidget {
         brightness: Brightness.light,
         primarySwatch: Colors.blue,
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.light),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+          brightness: Brightness.light,
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.blue,
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+          brightness: Brightness.dark,
+        ),
       ),
       themeMode: themeProvider.themeMode,
       locale: localeProvider.locale,
@@ -126,18 +135,56 @@ class _HomeScreenState extends State<HomeScreen> {
 
   CapacityType _capacityType = CapacityType.net;
 
+  // AdMob Banner
+  late BannerAd _bannerAd;
+  bool _isBannerAdLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-3287491879097224/2214382527',
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (Ad ad) {
+          setState(() {
+            _isBannerAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
+          ad.dispose();
+        },
+      ),
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd.dispose();
+    super.dispose();
+  }
+
   void _calculate() {
     if (_formKey.currentState!.validate()) {
       // Parse values
-      final double avgConsumption = double.parse(_avgConsumptionController.text);
-      final double avgConsumptionDistance = double.parse(_avgConsumptionDistanceController.text);
-      final double destinationDistance = double.parse(_destinationDistanceController.text);
+      final double avgConsumption = double.parse(
+        _avgConsumptionController.text,
+      );
+      final double avgConsumptionDistance = double.parse(
+        _avgConsumptionDistanceController.text,
+      );
+      final double destinationDistance = double.parse(
+        _destinationDistanceController.text,
+      );
       final double totalCapacity = double.parse(_totalCapacityController.text);
       final double currentLevel = double.parse(_currentLevelController.text);
       final double desiredLevel = double.parse(_desiredLevelController.text);
 
       // --- Calculation Logic ---
-      final double cap = _capacityType == CapacityType.gross ? totalCapacity - 4.0 : totalCapacity;
+      final double cap = _capacityType == CapacityType.gross
+          ? totalCapacity - 4.0
+          : totalCapacity;
       final double curr = cap * (currentLevel / 100.0);
       final double avg = (avgConsumptionDistance == 100.0)
           ? avgConsumption
@@ -214,96 +261,108 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildSectionTitle(l10n.averageConsumption),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildTextField(
-                      controller: _avgConsumptionController,
-                      label: l10n.consumptionHint,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _buildTextField(
-                      controller: _avgConsumptionDistanceController,
-                      label: l10n.distanceHint,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              _buildSectionTitle(l10n.destinationDistanceHint),
-              _buildTextField(
-                controller: _destinationDistanceController,
-                label: l10n.destinationDistanceHint,
-              ),
-              const SizedBox(height: 16),
-              _buildSectionTitle(l10n.totalBatteryCapacity),
-              _buildTextField(
-                controller: _totalCapacityController,
-                label: l10n.capacityHint,
-              ),
-              RadioGroup<CapacityType>(
-                groupValue: _capacityType,
-                onChanged: (CapacityType? value) {
-                  setState(() {
-                    _capacityType = value!;
-                  });
-                },
-                child: Row(
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: RadioListTile<CapacityType>(
-                        title: Text(l10n.net),
-                        value: CapacityType.net,
+                    _buildSectionTitle(l10n.averageConsumption),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildTextField(
+                            controller: _avgConsumptionController,
+                            label: l10n.consumptionHint,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: _buildTextField(
+                            controller: _avgConsumptionDistanceController,
+                            label: l10n.distanceHint,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    _buildSectionTitle(l10n.destinationDistanceHint),
+                    _buildTextField(
+                      controller: _destinationDistanceController,
+                      label: l10n.destinationDistanceHint,
+                    ),
+                    const SizedBox(height: 16),
+                    _buildSectionTitle(l10n.totalBatteryCapacity),
+                    _buildTextField(
+                      controller: _totalCapacityController,
+                      label: l10n.capacityHint,
+                    ),
+                    RadioGroup<CapacityType>(
+                      groupValue: _capacityType,
+                      onChanged: (CapacityType? value) {
+                        setState(() {
+                          _capacityType = value!;
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: RadioListTile<CapacityType>(
+                              title: Text(l10n.net),
+                              value: CapacityType.net,
+                            ),
+                          ),
+                          Expanded(
+                            child: RadioListTile<CapacityType>(
+                              title: Text(l10n.gross),
+                              value: CapacityType.gross,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: RadioListTile<CapacityType>(
-                        title: Text(l10n.gross),
-                        value: CapacityType.gross,
+                    const SizedBox(height: 16),
+                    _buildSectionTitle(l10n.currentBatteryLevel),
+                    _buildTextField(
+                      controller: _currentLevelController,
+                      label: l10n.levelHint,
+                      suffix: '%',
+                    ),
+                    const SizedBox(height: 16),
+                    _buildSectionTitle(l10n.desiredArrivalLevel),
+                    _buildTextField(
+                      controller: _desiredLevelController,
+                      label: l10n.levelHint,
+                      suffix: '%',
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _calculate,
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          textStyle: const TextStyle(fontSize: 18),
+                        ),
+                        child: Text(l10n.calculate),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
-              _buildSectionTitle(l10n.currentBatteryLevel),
-              _buildTextField(
-                controller: _currentLevelController,
-                label: l10n.levelHint,
-                suffix: '%',
-              ),
-              const SizedBox(height: 16),
-              _buildSectionTitle(l10n.desiredArrivalLevel),
-              _buildTextField(
-                controller: _desiredLevelController,
-                label: l10n.levelHint,
-                suffix: '%',
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _calculate,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    textStyle: const TextStyle(fontSize: 18),
-                  ),
-                  child: Text(l10n.calculate),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+          if (_isBannerAdLoaded)
+            SizedBox(
+              height: _bannerAd.size.height.toDouble(),
+              width: _bannerAd.size.width.toDouble(),
+              child: AdWidget(ad: _bannerAd),
+            ),
+        ],
       ),
     );
   }
@@ -336,10 +395,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.titleMedium,
-      ),
+      child: Text(title, style: Theme.of(context).textTheme.titleMedium),
     );
   }
 }
@@ -353,9 +409,7 @@ class SettingsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.settings),
-      ),
+      appBar: AppBar(title: Text(l10n.settings)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: RadioGroup<ThemeMode>(
