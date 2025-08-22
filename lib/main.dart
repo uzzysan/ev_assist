@@ -57,13 +57,6 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
     }
   }
 }
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ev_assist/l10n/app_localizations.dart';
 
 // --- CUSTOM WIDGETS ---
 
