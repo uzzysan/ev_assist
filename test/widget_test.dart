@@ -11,20 +11,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ev_assist/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('EvAssistApp displays main UI elements', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const EvAssistApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Sprawdź tytuł aplikacji
+    expect(find.textContaining('EV'), findsWidgets);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Sprawdź przycisk "Oblicz"
+    expect(find.widgetWithText(ElevatedButton, 'Oblicz'), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Sprawdź obecność banera reklamowego
+    expect(find.byType(AdBannerWidget), findsOneWidget);
+
+    // Sprawdź obecność pól tekstowych
+    expect(find.byType(TextFormField), findsWidgets);
   });
 }

@@ -8,7 +8,7 @@ import 'package:ev_assist/l10n/app_localizations.dart';
 
 // --- AD BANNER WIDGET ---
 class AdBannerWidget extends StatefulWidget {
-  const AdBannerWidget({Key? key}) : super(key: key);
+  const AdBannerWidget({super.key});
 
   @override
   State<AdBannerWidget> createState() => _AdBannerWidgetState();
@@ -47,7 +47,7 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   @override
   Widget build(BuildContext context) {
     if (_isAdLoaded) {
-      return Container(
+      return SizedBox(
         width: _bannerAd.size.width.toDouble(),
         height: _bannerAd.size.height.toDouble(),
         child: AdWidget(ad: _bannerAd),
