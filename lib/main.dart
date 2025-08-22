@@ -1,5 +1,66 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ev_assist/l10n/app_localizations.dart';
+
+// --- AD BANNER WIDGET ---
+class AdBannerWidget extends StatefulWidget {
+  const AdBannerWidget({Key? key}) : super(key: key);
+
+  @override
+  State<AdBannerWidget> createState() => _AdBannerWidgetState();
+}
+
+class _AdBannerWidgetState extends State<AdBannerWidget> {
+  late BannerAd _bannerAd;
+  bool _isAdLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-3287491879097224/8588219186',
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (Ad ad) {
+          setState(() {
+            _isAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
+          ad.dispose();
+        },
+      ),
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isAdLoaded) {
+      return Container(
+        width: _bannerAd.size.width.toDouble(),
+        height: _bannerAd.size.height.toDouble(),
+        child: AdWidget(ad: _bannerAd),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+}
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ev_assist/l10n/app_localizations.dart';
@@ -53,6 +114,12 @@ class LocaleProvider extends ChangeNotifier {
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+
+  // ATT request for iOS 14+
+  if (Platform.isIOS) {
+    AppTrackingTransparency.requestTrackingAuthorization();
+  }
+
   runApp(
     MultiProvider(
       providers: [
@@ -134,36 +201,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final _desiredLevelController = TextEditingController();
 
   CapacityType _capacityType = CapacityType.net;
-
-  // AdMob Banner
-  late BannerAd _bannerAd;
-  bool _isBannerAdLoaded = false;
-
-  @override
-  void initState() {
-    super.initState();
-      _bannerAd = BannerAd(
-        adUnitId: 'ca-app-pub-3287491879097224/8588219186',
-        size: AdSize.banner,
-        request: const AdRequest(),
-        listener: BannerAdListener(
-          onAdLoaded: (Ad ad) {
-            setState(() {
-              _isBannerAdLoaded = true;
-            });
-          },
-          onAdFailedToLoad: (Ad ad, LoadAdError error) {
-            ad.dispose();
-          },
-        ),
-      )..load();
-  }
-
-  @override
-  void dispose() {
-    _bannerAd.dispose();
-    super.dispose();
-  }
 
   void _calculate() {
     if (_formKey.currentState!.validate()) {
@@ -261,108 +298,101 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSectionTitle(l10n.averageConsumption),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildTextField(
+                      controller: _avgConsumptionController,
+                      label: l10n.consumptionHint,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _buildTextField(
+                      controller: _avgConsumptionDistanceController,
+                      label: l10n.distanceHint,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              _buildSectionTitle(l10n.destinationDistanceHint),
+              _buildTextField(
+                controller: _destinationDistanceController,
+                label: l10n.destinationDistanceHint,
+              ),
+              const SizedBox(height: 16),
+              _buildSectionTitle(l10n.totalBatteryCapacity),
+              _buildTextField(
+                controller: _totalCapacityController,
+                label: l10n.capacityHint,
+              ),
+              RadioGroup<CapacityType>(
+                groupValue: _capacityType,
+                onChanged: (CapacityType? value) {
+                  setState(() {
+                    _capacityType = value!;
+                  });
+                },
+                child: Row(
                   children: [
-                    _buildSectionTitle(l10n.averageConsumption),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildTextField(
-                            controller: _avgConsumptionController,
-                            label: l10n.consumptionHint,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: _buildTextField(
-                            controller: _avgConsumptionDistanceController,
-                            label: l10n.distanceHint,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    _buildSectionTitle(l10n.destinationDistanceHint),
-                    _buildTextField(
-                      controller: _destinationDistanceController,
-                      label: l10n.destinationDistanceHint,
-                    ),
-                    const SizedBox(height: 16),
-                    _buildSectionTitle(l10n.totalBatteryCapacity),
-                    _buildTextField(
-                      controller: _totalCapacityController,
-                      label: l10n.capacityHint,
-                    ),
-                    RadioGroup<CapacityType>(
-                      groupValue: _capacityType,
-                      onChanged: (CapacityType? value) {
-                        setState(() {
-                          _capacityType = value!;
-                        });
-                      },
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: RadioListTile<CapacityType>(
-                              title: Text(l10n.net),
-                              value: CapacityType.net,
-                            ),
-                          ),
-                          Expanded(
-                            child: RadioListTile<CapacityType>(
-                              title: Text(l10n.gross),
-                              value: CapacityType.gross,
-                            ),
-                          ),
-                        ],
+                    Expanded(
+                      child: RadioListTile<CapacityType>(
+                        title: Text(l10n.net),
+                        value: CapacityType.net,
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    _buildSectionTitle(l10n.currentBatteryLevel),
-                    _buildTextField(
-                      controller: _currentLevelController,
-                      label: l10n.levelHint,
-                      suffix: '%',
-                    ),
-                    const SizedBox(height: 16),
-                    _buildSectionTitle(l10n.desiredArrivalLevel),
-                    _buildTextField(
-                      controller: _desiredLevelController,
-                      label: l10n.levelHint,
-                      suffix: '%',
-                    ),
-                    const SizedBox(height: 24),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: _calculate,
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          textStyle: const TextStyle(fontSize: 18),
-                        ),
-                        child: Text(l10n.calculate),
+                    Expanded(
+                      child: RadioListTile<CapacityType>(
+                        title: Text(l10n.gross),
+                        value: CapacityType.gross,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
+              const SizedBox(height: 16),
+              _buildSectionTitle(l10n.currentBatteryLevel),
+              _buildTextField(
+                controller: _currentLevelController,
+                label: l10n.levelHint,
+                suffix: '%',
+              ),
+              const SizedBox(height: 16),
+              _buildSectionTitle(l10n.desiredArrivalLevel),
+              _buildTextField(
+                controller: _desiredLevelController,
+                label: l10n.levelHint,
+                suffix: '%',
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _calculate,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    textStyle: const TextStyle(fontSize: 18),
+                  ),
+                  child: Text(l10n.calculate),
+                ),
+              ),
+            ],
           ),
-          if (_isBannerAdLoaded)
-            SizedBox(
-              height: _bannerAd.size.height.toDouble(),
-              width: _bannerAd.size.width.toDouble(),
-              child: AdWidget(ad: _bannerAd),
-            ),
-        ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        alignment: Alignment.center,
+        height: 50,
+        child: const AdBannerWidget(),
       ),
     );
   }
