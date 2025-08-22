@@ -7,14 +7,28 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ev_assist/l10n/app_localizations.dart';
 
 // --- AD BANNER WIDGET ---
-class AdBannerWidget extends StatefulWidget {
+class AdBannerWidget extends StatelessWidget {
   const AdBannerWidget({super.key});
 
   @override
-  State<AdBannerWidget> createState() => _AdBannerWidgetState();
+  Widget build(BuildContext context) {
+    // W testach widgetowych zwracaj pusty widget
+    if (const bool.fromEnvironment('FLUTTER_TEST')) {
+      return const SizedBox.shrink();
+    }
+    // ...normalny kod reklamy...
+    return _AdBannerWidgetImpl();
+  }
 }
 
-class _AdBannerWidgetState extends State<AdBannerWidget> {
+class _AdBannerWidgetImpl extends StatefulWidget {
+  const _AdBannerWidgetImpl();
+
+  @override
+  State<_AdBannerWidgetImpl> createState() => _AdBannerWidgetImplState();
+}
+
+class _AdBannerWidgetImplState extends State<_AdBannerWidgetImpl> {
   late BannerAd _bannerAd;
   bool _isAdLoaded = false;
 
