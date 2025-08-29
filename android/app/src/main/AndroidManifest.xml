@@ -4,6 +4,11 @@
         android:label="ev_assist"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- AdMob App ID : ca-app-pub-3287491879097224~2214382527-->
+        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/> <!-- Twój AdMob App ID -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -21,10 +26,7 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-                    <!-- AdMob App ID -->
-                    <meta-data
-                        android:name="com.google.android.gms.ads.APPLICATION_ID"
-                        android:value="ca-app-pub-3287491879097224~2214382527"/> <!-- Twój AdMob App ID -->
+                    
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
