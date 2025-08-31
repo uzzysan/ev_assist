@@ -323,14 +323,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Center(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(24),
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: Image.asset(
-                        'assets/logo.png',
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      ),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final double logoWidth = constraints.maxWidth * 0.7;
+                        return Image.asset(
+                          'assets/logo.png',
+                          width: logoWidth,
+                          fit: BoxFit
+                              .contain, // zachowuje proporcje, wysokość automatyczna
+                        );
+                      },
                     ),
                   ),
                 ),
