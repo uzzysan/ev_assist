@@ -333,16 +333,51 @@ class _HomeScreenState extends State<HomeScreen> {
               localeProvider.setLocale(locale);
             },
             icon: const Icon(Icons.language),
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<Locale>>[
-              const PopupMenuItem<Locale>(
-                value: Locale('en'),
-                child: Text('English'),
-              ),
-              const PopupMenuItem<Locale>(
-                value: Locale('pl'),
-                child: Text('Polski'),
-              ),
-            ],
+            itemBuilder: (BuildContext context) {
+              final locales = AppLocalizations.supportedLocales;
+              const names = {
+                'da': 'Dansk',
+                'de': 'Deutsch',
+                'en': 'English',
+                'es': 'Español',
+                'fi': 'Suomi',
+                'fr': 'Français',
+                'no': 'Norsk',
+                'pl': 'Polski',
+                'se': 'Svenska',
+              };
+              const flags = {
+                'da': 'assets/flags/dk.png',
+                'de': 'assets/flags/de.png',
+                'en': 'assets/flags/gb.png',
+                'es': 'assets/flags/es.png',
+                'fi': 'assets/flags/fi.png',
+                'fr': 'assets/flags/fr.png',
+                'no': 'assets/flags/no.png',
+                'pl': 'assets/flags/pl.png',
+                'se': 'assets/flags/se.png',
+              };
+
+              return locales.map((loc) {
+                final code = loc.languageCode;
+                return PopupMenuItem<Locale>(
+                  value: loc,
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        flags[code] ?? 'assets/flags/gb.png',
+                        width: 24,
+                        height: 24,
+                        errorBuilder: (_, _, _) =>
+                            const SizedBox(width: 24, height: 24),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(names[code] ?? code),
+                    ],
+                  ),
+                );
+              }).toList();
+            },
           ),
           IconButton(
             icon: const Icon(Icons.settings),
