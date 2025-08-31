@@ -128,67 +128,70 @@ void main() {
     AppTrackingTransparency.requestTrackingAuthorization();
   }
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => LocaleProvider()),
-      ],
-      child: const EvAssistApp(),
-    ),
-  );
+  runApp(const EvAssistApp());
 }
 
 // --- APP ---
 
 class EvAssistApp extends StatelessWidget {
-  const EvAssistApp({super.key});
+  final Locale? locale;
+  final ThemeMode? themeMode;
+
+  const EvAssistApp({super.key, this.locale, this.themeMode});
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final localeProvider = Provider.of<LocaleProvider>(context);
-
-    return MaterialApp(
-      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          brightness: Brightness.light,
-        ),
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          brightness: Brightness.dark,
-        ),
-      ),
-      themeMode: themeProvider.themeMode,
-      locale: localeProvider.locale,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
       ],
-      supportedLocales: const [
-        Locale('da'), // Danish
-        Locale('de'), // German
-        Locale('en'), // English
-        Locale('es'), // Spanish
-        Locale('fi'), // Finnish
-        Locale('fr'), // French
-        Locale('no'), // Norwegian
-        Locale('pl'), // Polish
-        Locale('se'), // Swedish
-      ],
-      home: const HomeScreen(),
+      child: Consumer2<ThemeProvider, LocaleProvider>(
+        builder: (context, themeProvider, localeProvider, child) {
+          return MaterialApp(
+            onGenerateTitle: (context) =>
+                AppLocalizations.of(context)!.appTitle,
+            theme: ThemeData(
+              brightness: Brightness.light,
+              primarySwatch: Colors.blue,
+              useMaterial3: true,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.blue,
+                brightness: Brightness.light,
+              ),
+            ),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              primarySwatch: Colors.blue,
+              useMaterial3: true,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.blue,
+                brightness: Brightness.dark,
+              ),
+            ),
+            themeMode: themeProvider.themeMode,
+            locale: localeProvider.locale,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('da'), // Danish
+              Locale('de'), // German
+              Locale('en'), // English
+              Locale('es'), // Spanish
+              Locale('fi'), // Finnish
+              Locale('fr'), // French
+              Locale('no'), // Norwegian
+              Locale('pl'), // Polish
+              Locale('se'), // Swedish
+            ],
+            home: const HomeScreen(),
+          );
+        },
+      ),
     );
   }
 }
