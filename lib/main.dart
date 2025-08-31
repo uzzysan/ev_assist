@@ -75,21 +75,56 @@ class _AdBannerWidgetImplState extends State<_AdBannerWidgetImpl> {
 
 // --- CUSTOM WIDGETS ---
 
-class RadioGroup<T> extends StatelessWidget {
+// Lightweight Radio group implementation to manage group value from an ancestor.
+class RadioGroupScope<T> extends InheritedWidget {
   final T groupValue;
   final ValueChanged<T?> onChanged;
-  final Widget child;
 
-  const RadioGroup({
+  const RadioGroupScope({
     super.key,
     required this.groupValue,
     required this.onChanged,
-    required this.child,
+    required super.child,
+  });
+
+  static RadioGroupScope<T>? of<T>(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<RadioGroupScope<T>>();
+  }
+
+  @override
+  bool updateShouldNotify(covariant RadioGroupScope<T> oldWidget) {
+    return oldWidget.groupValue != groupValue;
+  }
+}
+
+class RadioOption<T> extends StatelessWidget {
+  final T value;
+  final Widget title;
+  final Widget? subtitle;
+
+  const RadioOption({
+    super.key,
+    required this.value,
+    required this.title,
+    this.subtitle,
   });
 
   @override
   Widget build(BuildContext context) {
-    return child;
+    final scope = RadioGroupScope.of<T>(context);
+    final groupValue = scope?.groupValue;
+    final onChanged = scope?.onChanged;
+
+    final selected = groupValue == value;
+    return ListTile(
+      leading: Icon(
+        selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+        color: selected ? Theme.of(context).colorScheme.primary : null,
+      ),
+      title: title,
+      subtitle: subtitle,
+      onTap: () => onChanged?.call(value),
+    );
   }
 }
 
@@ -377,34 +412,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: _totalCapacityController,
                 label: l10n.capacityHint,
               ),
-              // Naprawiony RadioGroup
-              Row(
-                children: [
-                  Expanded(
-                    child: RadioListTile<CapacityType>(
-                      title: Text(l10n.net),
-                      value: CapacityType.net,
-                      groupValue: _capacityType,
-                      onChanged: (CapacityType? value) {
-                        setState(() {
-                          _capacityType = value!;
-                        });
-                      },
+              // RadioGroup for capacity selection (modern API)
+              RadioGroupScope<CapacityType>(
+                groupValue: _capacityType,
+                onChanged: (CapacityType? v) => setState(() {
+                  if (v != null) _capacityType = v;
+                }),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: RadioOption<CapacityType>(
+                        value: CapacityType.net,
+                        title: Text(l10n.net),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: RadioListTile<CapacityType>(
-                      title: Text(l10n.gross),
-                      value: CapacityType.gross,
-                      groupValue: _capacityType,
-                      onChanged: (CapacityType? value) {
-                        setState(() {
-                          _capacityType = value!;
-                        });
-                      },
+                    Expanded(
+                      child: RadioOption<CapacityType>(
+                        value: CapacityType.gross,
+                        title: Text(l10n.gross),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(height: 16),
               _buildSectionTitle(l10n.currentBatteryLevel),
@@ -507,23 +536,27 @@ class SettingsScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            RadioListTile<ThemeMode>(
-              title: Text(l10n.light, style: GoogleFonts.montserrat()),
-              value: ThemeMode.light,
+            RadioGroupScope<ThemeMode>(
               groupValue: themeProvider.themeMode,
-              onChanged: (mode) => themeProvider.setThemeMode(mode!),
-            ),
-            RadioListTile<ThemeMode>(
-              title: Text(l10n.dark, style: GoogleFonts.montserrat()),
-              value: ThemeMode.dark,
-              groupValue: themeProvider.themeMode,
-              onChanged: (mode) => themeProvider.setThemeMode(mode!),
-            ),
-            RadioListTile<ThemeMode>(
-              title: Text(l10n.system, style: GoogleFonts.montserrat()),
-              value: ThemeMode.system,
-              groupValue: themeProvider.themeMode,
-              onChanged: (mode) => themeProvider.setThemeMode(mode!),
+              onChanged: (ThemeMode? m) {
+                if (m != null) themeProvider.setThemeMode(m);
+              },
+              child: Column(
+                children: [
+                  RadioOption<ThemeMode>(
+                    value: ThemeMode.light,
+                    title: Text(l10n.light, style: GoogleFonts.montserrat()),
+                  ),
+                  RadioOption<ThemeMode>(
+                    value: ThemeMode.dark,
+                    title: Text(l10n.dark, style: GoogleFonts.montserrat()),
+                  ),
+                  RadioOption<ThemeMode>(
+                    value: ThemeMode.system,
+                    title: Text(l10n.system, style: GoogleFonts.montserrat()),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
