@@ -178,8 +178,15 @@ class EvAssistApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
+        Locale('da'), // Danish
+        Locale('de'), // German
         Locale('en'), // English
+        Locale('es'), // Spanish
+        Locale('fi'), // Finnish
+        Locale('fr'), // French
+        Locale('no'), // Norwegian
         Locale('pl'), // Polish
+        Locale('se'), // Swedish
       ],
       home: const HomeScreen(),
     );
@@ -368,29 +375,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: l10n.capacityHint,
               ),
               // Naprawiony RadioGroup
-              RadioGroup<CapacityType>(
-                groupValue: _capacityType,
-                onChanged: (CapacityType? value) {
-                  setState(() {
-                    _capacityType = value!;
-                  });
-                },
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: RadioListTile<CapacityType>(
-                        title: Text(l10n.net),
-                        value: CapacityType.net,
-                      ),
+              Row(
+                children: [
+                  Expanded(
+                    child: RadioListTile<CapacityType>(
+                      title: Text(l10n.net),
+                      value: CapacityType.net,
+                      groupValue: _capacityType,
+                      onChanged: (CapacityType? value) {
+                        setState(() {
+                          _capacityType = value!;
+                        });
+                      },
                     ),
-                    Expanded(
-                      child: RadioListTile<CapacityType>(
-                        title: Text(l10n.gross),
-                        value: CapacityType.gross,
-                      ),
+                  ),
+                  Expanded(
+                    child: RadioListTile<CapacityType>(
+                      title: Text(l10n.gross),
+                      value: CapacityType.gross,
+                      groupValue: _capacityType,
+                      onChanged: (CapacityType? value) {
+                        setState(() {
+                          _capacityType = value!;
+                        });
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
               _buildSectionTitle(l10n.currentBatteryLevel),
@@ -493,25 +504,23 @@ class SettingsScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            RadioGroup<ThemeMode>(
+            RadioListTile<ThemeMode>(
+              title: Text(l10n.light, style: GoogleFonts.montserrat()),
+              value: ThemeMode.light,
               groupValue: themeProvider.themeMode,
               onChanged: (mode) => themeProvider.setThemeMode(mode!),
-              child: Column(
-                children: [
-                  RadioListTile<ThemeMode>(
-                    title: Text(l10n.light, style: GoogleFonts.montserrat()),
-                    value: ThemeMode.light,
-                  ),
-                  RadioListTile<ThemeMode>(
-                    title: Text(l10n.dark, style: GoogleFonts.montserrat()),
-                    value: ThemeMode.dark,
-                  ),
-                  RadioListTile<ThemeMode>(
-                    title: Text(l10n.system, style: GoogleFonts.montserrat()),
-                    value: ThemeMode.system,
-                  ),
-                ],
-              ),
+            ),
+            RadioListTile<ThemeMode>(
+              title: Text(l10n.dark, style: GoogleFonts.montserrat()),
+              value: ThemeMode.dark,
+              groupValue: themeProvider.themeMode,
+              onChanged: (mode) => themeProvider.setThemeMode(mode!),
+            ),
+            RadioListTile<ThemeMode>(
+              title: Text(l10n.system, style: GoogleFonts.montserrat()),
+              value: ThemeMode.system,
+              groupValue: themeProvider.themeMode,
+              onChanged: (mode) => themeProvider.setThemeMode(mode!),
             ),
           ],
         ),
