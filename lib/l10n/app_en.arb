@@ -2,7 +2,7 @@
 {
     "appTitle": "EV Charging Assistant",
     "calculate": "Calculate",
-    "averageConsumption": "Avg. consumption",
+    "averageConsumption": "Average consumption",
     "distance": "Distance",
     "km": "km",
     "miles": "miles",
@@ -10,11 +10,11 @@
     "net": "Net",
     "gross": "Gross",
     "currentBatteryLevel": "Current battery level",
-    "desiredArrivalLevel": "Desired arrival level",
+    "desiredArrivalLevel": "Expected level on arrival",
     "resultTitle": "Result",
     "warningTitle": "Warning",
-    "chargeMessage": "To reach your destination with the desired reserve, you need to charge {chargeAmount} kWh.",
-    "errorMessage": "It's not possible to reach the destination with the assumed parameters. The required energy ({chargeAmount} kWh) exceeds battery capacity.",
+    "chargeMessage": "To reach your destination with the assumed reserve, you need to charge {chargeAmount} kWh.",
+    "errorMessage": "Reaching the destination with the given parameters is not possible. The required energy ({chargeAmount} kWh) exceeds the battery capacity.",
     "ok": "OK",
     "settings": "Settings",
     "theme": "Theme",
@@ -23,8 +23,8 @@
     "system": "System",
     "language": "Language",
     "consumptionHint": "kWh/100km or miles",
-    "distanceHint": "for avg. consumption",
-    "destinationDistanceHint": "e.g. 150 km",
-    "capacityHint": "e.g. 77",
-    "levelHint": "e.g. 80"
+    "distanceHint": "for what distance",
+    "destinationDistanceHint": "distance to next destination",
+    "capacityHint": "battery capacity",
+    "levelHint": "charge level %"
 }

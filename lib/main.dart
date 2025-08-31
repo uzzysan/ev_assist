@@ -368,33 +368,29 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: l10n.capacityHint,
               ),
               // Naprawiony RadioGroup
-              Row(
-                children: [
-                  Expanded(
-                    child: RadioListTile<CapacityType>(
-                      title: Text(l10n.net),
-                      value: CapacityType.net,
-                      groupValue: _capacityType,
-                      onChanged: (CapacityType? value) {
-                        setState(() {
-                          _capacityType = value!;
-                        });
-                      },
+              RadioGroup<CapacityType>(
+                groupValue: _capacityType,
+                onChanged: (CapacityType? value) {
+                  setState(() {
+                    _capacityType = value!;
+                  });
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: RadioListTile<CapacityType>(
+                        title: Text(l10n.net),
+                        value: CapacityType.net,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: RadioListTile<CapacityType>(
-                      title: Text(l10n.gross),
-                      value: CapacityType.gross,
-                      groupValue: _capacityType,
-                      onChanged: (CapacityType? value) {
-                        setState(() {
-                          _capacityType = value!;
-                        });
-                      },
+                    Expanded(
+                      child: RadioListTile<CapacityType>(
+                        title: Text(l10n.gross),
+                        value: CapacityType.gross,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(height: 16),
               _buildSectionTitle(l10n.currentBatteryLevel),
@@ -497,23 +493,25 @@ class SettingsScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            RadioListTile<ThemeMode>(
-              title: Text(l10n.light, style: GoogleFonts.montserrat()),
-              value: ThemeMode.light,
+            RadioGroup<ThemeMode>(
               groupValue: themeProvider.themeMode,
               onChanged: (mode) => themeProvider.setThemeMode(mode!),
-            ),
-            RadioListTile<ThemeMode>(
-              title: Text(l10n.dark, style: GoogleFonts.montserrat()),
-              value: ThemeMode.dark,
-              groupValue: themeProvider.themeMode,
-              onChanged: (mode) => themeProvider.setThemeMode(mode!),
-            ),
-            RadioListTile<ThemeMode>(
-              title: Text(l10n.system, style: GoogleFonts.montserrat()),
-              value: ThemeMode.system,
-              groupValue: themeProvider.themeMode,
-              onChanged: (mode) => themeProvider.setThemeMode(mode!),
+              child: Column(
+                children: [
+                  RadioListTile<ThemeMode>(
+                    title: Text(l10n.light, style: GoogleFonts.montserrat()),
+                    value: ThemeMode.light,
+                  ),
+                  RadioListTile<ThemeMode>(
+                    title: Text(l10n.dark, style: GoogleFonts.montserrat()),
+                    value: ThemeMode.dark,
+                  ),
+                  RadioListTile<ThemeMode>(
+                    title: Text(l10n.system, style: GoogleFonts.montserrat()),
+                    value: ThemeMode.system,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

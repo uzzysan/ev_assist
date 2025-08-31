@@ -23,8 +23,8 @@
     "system": "Systemowy",
     "language": "Język",
     "consumptionHint": "kWh/100km lub mil",
-    "distanceHint": "dla średniego zużycia",
-    "destinationDistanceHint": "np. 150 km",
-    "capacityHint": "np. 77",
-    "levelHint": "np. 80"
+    "distanceHint": "na jakim dystansie",
+    "destinationDistanceHint": "odległość do następnego celu",
+    "capacityHint": "pojemność baterii",
+    "levelHint": "poziom naładowania %"
 }
