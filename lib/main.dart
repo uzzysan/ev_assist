@@ -5,6 +5,7 @@ import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ev_assist/l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // --- AD BANNER WIDGET ---
 class AdBannerWidget extends StatelessWidget {
@@ -276,7 +277,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.appTitle),
+        title: Text(
+          l10n.appTitle,
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
         actions: [
           PopupMenuButton<Locale>(
             onSelected: (Locale locale) {
@@ -312,6 +317,24 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Logo na górze
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(24),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Image.asset(
+                        'assets/logo.png',
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               _buildSectionTitle(l10n.averageConsumption),
               Row(
                 children: [
@@ -342,29 +365,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: _totalCapacityController,
                 label: l10n.capacityHint,
               ),
-              RadioGroup<CapacityType>(
-                groupValue: _capacityType,
-                onChanged: (CapacityType? value) {
-                  setState(() {
-                    _capacityType = value!;
-                  });
-                },
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: RadioListTile<CapacityType>(
-                        title: Text(l10n.net),
-                        value: CapacityType.net,
-                      ),
+              // Naprawiony RadioGroup
+              Row(
+                children: [
+                  Expanded(
+                    child: RadioListTile<CapacityType>(
+                      title: Text(l10n.net),
+                      value: CapacityType.net,
+                      groupValue: _capacityType,
+                      onChanged: (CapacityType? value) {
+                        setState(() {
+                          _capacityType = value!;
+                        });
+                      },
                     ),
-                    Expanded(
-                      child: RadioListTile<CapacityType>(
-                        title: Text(l10n.gross),
-                        value: CapacityType.gross,
-                      ),
+                  ),
+                  Expanded(
+                    child: RadioListTile<CapacityType>(
+                      title: Text(l10n.gross),
+                      value: CapacityType.gross,
+                      groupValue: _capacityType,
+                      onChanged: (CapacityType? value) {
+                        setState(() {
+                          _capacityType = value!;
+                        });
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
               _buildSectionTitle(l10n.currentBatteryLevel),
@@ -387,9 +415,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: _calculate,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    textStyle: const TextStyle(fontSize: 18),
+                    textStyle: GoogleFonts.montserrat(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  child: Text(l10n.calculate),
+                  child: Text(l10n.calculate, style: GoogleFonts.montserrat()),
                 ),
               ),
             ],
@@ -446,30 +477,43 @@ class SettingsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.settings)),
+      appBar: AppBar(
+        title: Text(
+          l10n.settings,
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: RadioGroup<ThemeMode>(
-          groupValue: themeProvider.themeMode,
-          onChanged: (mode) => themeProvider.setThemeMode(mode!),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(l10n.theme, style: Theme.of(context).textTheme.titleLarge),
-              RadioListTile<ThemeMode>(
-                title: Text(l10n.light),
-                value: ThemeMode.light,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.theme,
+              style: GoogleFonts.montserrat(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
-              RadioListTile<ThemeMode>(
-                title: Text(l10n.dark),
-                value: ThemeMode.dark,
-              ),
-              RadioListTile<ThemeMode>(
-                title: Text(l10n.system),
-                value: ThemeMode.system,
-              ),
-            ],
-          ),
+            ),
+            RadioListTile<ThemeMode>(
+              title: Text(l10n.light, style: GoogleFonts.montserrat()),
+              value: ThemeMode.light,
+              groupValue: themeProvider.themeMode,
+              onChanged: (mode) => themeProvider.setThemeMode(mode!),
+            ),
+            RadioListTile<ThemeMode>(
+              title: Text(l10n.dark, style: GoogleFonts.montserrat()),
+              value: ThemeMode.dark,
+              groupValue: themeProvider.themeMode,
+              onChanged: (mode) => themeProvider.setThemeMode(mode!),
+            ),
+            RadioListTile<ThemeMode>(
+              title: Text(l10n.system, style: GoogleFonts.montserrat()),
+              value: ThemeMode.system,
+              groupValue: themeProvider.themeMode,
+              onChanged: (mode) => themeProvider.setThemeMode(mode!),
+            ),
+          ],
         ),
       ),
     );
