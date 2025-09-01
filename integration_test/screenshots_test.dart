@@ -1,8 +1,8 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:ev_assist/main.dart' as app;
 
 void main() {
@@ -59,31 +59,35 @@ void main() {
     },
   ];
 
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
   for (final variant in variants) {
     testWidgets('Screenshot ${variant['name']}', (WidgetTester tester) async {
-      final controller = ScreenshotController();
       await tester.binding.setSurfaceSize(variant['device']);
       await tester.pumpWidget(
-        Screenshot(
-          controller: controller,
-          child: app.EvAssistApp(
-            locale: variant['locale'],
-            themeMode: variant['theme'],
-          ),
-        ),
+        app.EvAssistApp(locale: variant['locale'], themeMode: variant['theme']),
       );
       await tester.pumpAndSettle();
 
-      // Utwórz katalog, jeśli nie istnieje
-      final directory = Directory('screenshots');
-      if (!await directory.exists()) {
-        await directory.create();
-      }
-
-      await controller.captureAndSave(
-        'screenshots',
-        fileName: '${variant['name']}.png',
+      // Save screenshot into system temp directory (writable on device/emulator)
+      final tmpDir = await Directory.systemTemp.createTemp(
+        'ev_assist_screenshots_',
       );
+      debugPrint('Screenshots temp dir: ${tmpDir.path}');
+      // Take screenshot
+      final bytes = await binding.takeScreenshot(variant['name']);
+      final filePath =
+          '${tmpDir.path.replaceAll('\\', '/')}/${variant['name']}.png';
+      final file = File(filePath);
+      try {
+        await file.create(recursive: true);
+        await file.writeAsBytes(bytes);
+        debugPrint('Saved screenshot: ${file.path}');
+      } catch (e, st) {
+        debugPrint('Failed to save screenshot to ${file.path}: $e');
+        debugPrint(st.toString());
+        rethrow;
+      }
     });
   }
 }
