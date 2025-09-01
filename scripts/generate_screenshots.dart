@@ -10,8 +10,20 @@ void main(List<String> arguments) async {
 
   // Parse command line arguments
   var useEnhanced = arguments.contains('--enhanced');
-  var deviceOnly = arguments.where((arg) => arg.startsWith('--device=')).firstOrNull;
-  var localeOnly = arguments.where((arg) => arg.startsWith('--locale=')).firstOrNull;
+  String? deviceOnly;
+  String? localeOnly;
+  
+  try {
+    deviceOnly = arguments.where((arg) => arg.startsWith('--device=')).first;
+  } catch (_) {
+    deviceOnly = null;
+  }
+  
+  try {
+    localeOnly = arguments.where((arg) => arg.startsWith('--locale=')).first;
+  } catch (_) {
+    localeOnly = null;
+  }
   
   if (arguments.contains('--help') || arguments.contains('-h')) {
     _showHelp();
@@ -48,6 +60,19 @@ void main(List<String> arguments) async {
     nameFilters.add('--name-filter=.*${locale}.*');
   }
 
+  // Check if Flutter is available
+  print('🔍 Checking Flutter availability...');
+  try {
+    await _runCommand('flutter', ['--version'], timeout: 10);
+    print('✅ Flutter found and working');
+  } catch (e) {
+    print('❌ Error: Flutter not found in PATH or not working');
+    print('Please ensure Flutter SDK is installed and in your PATH');
+    print('You can also run the integration test directly:');
+    print('  flutter test $testFile');
+    exit(1);
+  }
+
   // Clean previous build
   print('🧹 Cleaning previous build...');
   await _runCommand('flutter', ['clean']);
@@ -78,23 +103,32 @@ void main(List<String> arguments) async {
   }
 }
 
-Future<void> _runCommand(String command, List<String> arguments) async {
+Future<void> _runCommand(String command, List<String> arguments, {int? timeout}) async {
   print('🔄 Running: $command ${arguments.join(' ')}');
   
-  final process = await Process.start(command, arguments);
-  
-  // Stream output in real-time
-  process.stdout.transform(SystemEncoding().decoder).listen((data) {
-    stdout.write(data);
-  });
-  
-  process.stderr.transform(SystemEncoding().decoder).listen((data) {
-    stderr.write(data);
-  });
-  
-  final exitCode = await process.exitCode;
-  if (exitCode != 0) {
-    throw Exception('Command failed with exit code $exitCode');
+  try {
+    final process = await Process.start(command, arguments);
+    
+    // Stream output in real-time
+    process.stdout.transform(SystemEncoding().decoder).listen((data) {
+      stdout.write(data);
+    });
+    
+    process.stderr.transform(SystemEncoding().decoder).listen((data) {
+      stderr.write(data);
+    });
+    
+    final exitCode = timeout != null 
+        ? await process.exitCode.timeout(Duration(seconds: timeout))
+        : await process.exitCode;
+        
+    if (exitCode != 0) {
+      throw Exception('Command failed with exit code $exitCode');
+    }
+  } on ProcessException catch (e) {
+    throw Exception('Failed to start process: ${e.message}');
+  } catch (e) {
+    throw Exception('Command execution failed: $e');
   }
 }
 
