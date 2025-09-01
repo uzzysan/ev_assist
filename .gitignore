@@ -59,3 +59,5 @@ pubspec.lock
 
 # Windows
 /windows/flutter/ephemeral
+CLAUDE.md
+.gitignore

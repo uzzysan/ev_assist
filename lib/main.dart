@@ -493,7 +493,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 child: Builder(
                   builder: (context) {
-                    TextButton(
+                    return TextButton(
                       onPressed: _launchSupportURL,
                       child: Text(
                         l10n.supportAuthorButton,
@@ -549,17 +549,18 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Text(title, style: Theme.of(context).textTheme.titleMedium),
     );
   }
-}
 
-void _launchSupportURL() async {
-  final Uri url = Uri.parse('https://paypal.me/RMaculewicz');
-  if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Nie można otworzyć linku: ${url.toString()}')),
-    );
+  void _launchSupportURL() async {
+    final Uri url = Uri.parse('https://paypal.me/RMaculewicz');
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Nie można otworzyć linku: ${url.toString()}')),
+      );
+    }
   }
 }
+
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
