@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -223,7 +224,7 @@ class EvAssistApp extends StatelessWidget {
               Locale('pl'), // Polish
               Locale('se'), // Swedish
             ],
-            home: const HomeScreen(),
+            home: const SplashScreen(),
           );
         },
       ),
@@ -397,24 +398,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Logo na górze
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
+              // Logo na górze (teraz zależne od motywu)
+              const Padding(
+                padding: EdgeInsets.only(bottom: 16.0),
                 child: Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(24),
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        final double logoWidth = constraints.maxWidth * 0.7;
-                        return Image.asset(
-                          'assets/logo.png',
-                          width: logoWidth,
-                          fit: BoxFit
-                              .contain, // zachowuje proporcje, wysokość automatyczna
-                        );
-                      },
-                    ),
-                  ),
+                  child: TopLogo(), // Używamy naszego nowego widgetu!
                 ),
               ),
               _buildSectionTitle(l10n.averageConsumption),
@@ -595,6 +583,100 @@ class SettingsScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// --- Splash & TopLogo ---
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Uruchom nawigację do ekranu głównego po 2 sekundach
+    Timer(const Duration(seconds: 2), _goToHome);
+  }
+
+  void _goToHome() {
+    // Użyj pushReplacement, aby użytkownik nie mógł wrócić do ekranu powitalnego
+    Navigator.of(
+      context,
+    ).pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final isDark = brightness == Brightness.dark;
+    final image = isDark
+        ? 'assets/welcome_dark.png'
+        : 'assets/welcome_bright.png';
+
+    // Logowanie do konsoli w celu debugowania
+    debugPrint(
+      'SplashScreen: Używany motyw to $brightness, ładowany obraz to $image',
+    );
+
+    return Scaffold(
+      // Ustawienie tła w zależności od motywu
+      backgroundColor: isDark
+          ? const Color.fromRGBO(45, 48, 51, 1)
+          : Colors.white,
+      body: Center(
+        child: Image.asset(
+          image,
+          fit: BoxFit.contain,
+          width: double.infinity,
+          height: double.infinity,
+          // Zabezpieczenie przed błędem, gdyby plik nie istniał
+          errorBuilder: (context, error, stackTrace) {
+            debugPrint('Błąd ładowania obrazu w SplashScreen: $error');
+            return const SizedBox.shrink(); // Pokaż pusty widget w razie błędu
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class TopLogo extends StatelessWidget {
+  const TopLogo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final isDark = brightness == Brightness.dark;
+    final asset = isDark ? 'assets/logo_dark.png' : 'assets/logo_bright.png';
+
+    // Logowanie do konsoli w celu debugowania
+    debugPrint(
+      'TopLogo: Używany motyw to $brightness, ładowany asset to $asset',
+    );
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final double logoWidth = constraints.maxWidth * 0.7;
+          return Image.asset(
+            asset,
+            width: logoWidth,
+            fit: BoxFit.contain,
+            // Zabezpieczenie przed błędem, gdyby plik nie istniał
+            errorBuilder: (context, error, stackTrace) {
+              debugPrint('Błąd ładowania obrazu w TopLogo: $error');
+              return const SizedBox.shrink(); // Pokaż pusty widget w razie błędu
+            },
+          );
+        },
       ),
     );
   }

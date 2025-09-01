@@ -31,7 +31,10 @@ flutter:
   uses-material-design: true
   assets:
     - assets/flags/
-    - assets/logo.png
+    - assets/logo_bright.png
+    - assets/logo_dark.png
+    - assets/welcome_bright.png
+    - assets/welcome_dark.png
 
 flutter_icons:
   android: true
