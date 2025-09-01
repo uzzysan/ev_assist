@@ -79,7 +79,7 @@ class AppLocalizationsSe extends AppLocalizations {
   String get language => 'Språk';
 
   @override
-  String get consumptionHint => 'kWh/100km eller mil';
+  String get consumptionHint => 'kWh';
 
   @override
   String get distanceHint => 'för vilket avstånd';

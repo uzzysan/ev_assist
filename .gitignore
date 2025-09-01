@@ -61,3 +61,4 @@ pubspec.lock
 /windows/flutter/ephemeral
 CLAUDE.md
 .gitignore
+.claude/settings.local.json

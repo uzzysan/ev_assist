@@ -199,7 +199,7 @@ class EvAssistApp extends StatelessWidget {
                 surfaceContainer: const Color(0xFFFFFFFF),
                 surfaceContainerHighest: const Color(0xFFF0F0F0),
               ),
-              cardTheme: const CardTheme(
+              cardTheme: const CardThemeData(
                 elevation: 2,
                 margin: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
               ),
@@ -241,7 +241,7 @@ class EvAssistApp extends StatelessWidget {
                 surfaceContainer: const Color(0xFF1E1E1E),
                 surfaceContainerHighest: const Color(0xFF2A2A2A),
               ),
-              cardTheme: const CardTheme(
+              cardTheme: const CardThemeData(
                 elevation: 4,
                 margin: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
                 color: Color(0xFF1E1E1E),

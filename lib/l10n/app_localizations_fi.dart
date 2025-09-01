@@ -79,7 +79,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get language => 'Kieli';
 
   @override
-  String get consumptionHint => 'kWh/100km tai mailia';
+  String get consumptionHint => 'kWh';
 
   @override
   String get distanceHint => 'mille etäisyydelle';
