@@ -491,19 +491,23 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 8), // Mały odstęp
               SizedBox(
                 width: double.infinity,
-                child: Builder(
-                  builder: (context) {
-                    return TextButton(
-                      onPressed: _launchSupportURL,
-                      child: Text(
-                        l10n.supportAuthorButton,
-                        style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                    );
-                  },
+                child: ElevatedButton(
+                  onPressed: _showSupportOptions,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightBlue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    l10n.supportAuthorButton,
+                    style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -550,8 +554,68 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _launchSupportURL() async {
-    final Uri url = Uri.parse('https://paypal.me/RMaculewicz');
+  void _showSupportOptions() {
+    final l10n = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          l10n.supportAuthorButton,
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Choose your preferred support method:',
+              style: GoogleFonts.montserrat(),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _launchSupportURL('https://paypal.me/RMaculewicz');
+                },
+                icon: const Icon(Icons.payment),
+                label: Text('PayPal', style: GoogleFonts.montserrat()),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF0070BA),
+                  foregroundColor: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _launchSupportURL('https://buycoffee.to/uzzy');
+                },
+                icon: const Icon(Icons.coffee),
+                label: Text('Buy me a coffee', style: GoogleFonts.montserrat()),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFFDD00),
+                  foregroundColor: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Cancel', style: GoogleFonts.montserrat()),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _launchSupportURL(String urlString) async {
+    final Uri url = Uri.parse(urlString);
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(

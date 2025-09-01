@@ -22,7 +22,7 @@
     "dark": "Mörk",
     "system": "System",
     "language": "Språk",
-    "consumptionHint": "kWh/100km eller mil",
+    "consumptionHint": "kWh",
     "distanceHint": "för vilket avstånd",
     "destinationDistanceHint": "avstånd till nästa destination",
     "capacityHint": "batterikapacitet",

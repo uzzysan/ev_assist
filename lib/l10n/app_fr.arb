@@ -22,7 +22,7 @@
     "dark": "Sombre",
     "system": "Système",
     "language": "Langue",
-    "consumptionHint": "kWh/100km ou miles",
+    "consumptionHint": "kWh",
     "distanceHint": "pour quelle distance",
     "destinationDistanceHint": "distance jusqu'à la prochaine destination",
     "capacityHint": "capacité de la batterie",
