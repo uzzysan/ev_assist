@@ -31,7 +31,18 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Use test AdMob IDs for development
+            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3940256099942544~3347511713\"")
+            buildConfigField("String", "ADMOB_BANNER_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
+            resValue("string", "admob_app_id", "ca-app-pub-3940256099942544~3347511713")
+        }
         release {
+            // Use your real AdMob IDs for production
+            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3287491879097224~2214382527\"")
+            buildConfigField("String", "ADMOB_BANNER_ID", "\"ca-app-pub-3287491879097224/8588219186\"")
+            resValue("string", "admob_app_id", "ca-app-pub-3287491879097224~2214382527")
+            
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")

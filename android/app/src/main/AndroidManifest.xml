@@ -4,11 +4,10 @@
         android:label="ev_assist"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <!-- AdMob App ID : ca-app-pub-3287491879097224~2214382527-->
-        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+        <!-- AdMob App ID: Automatically set based on build type (debug/release) -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/> <!-- Twój AdMob App ID -->
+            android:value="@string/admob_app_id"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
