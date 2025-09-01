@@ -26,5 +26,6 @@
     "distanceHint": "na jakim dystansie",
     "destinationDistanceHint": "odległość do następnego celu",
     "capacityHint": "pojemność baterii",
-    "levelHint": "poziom naładowania %"
+    "levelHint": "poziom naładowania %",
+    "supportAuthorButton": "Wesprzyj autora"
 }

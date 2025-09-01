@@ -92,4 +92,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get levelHint => 'lataustaso %';
+
+  @override
+  String get supportAuthorButton => 'Tue kirjoittajaa';
 }

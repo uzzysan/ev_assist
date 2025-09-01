@@ -26,5 +26,6 @@
     "distanceHint": "för vilket avstånd",
     "destinationDistanceHint": "avstånd till nästa destination",
     "capacityHint": "batterikapacitet",
-    "levelHint": "laddningsnivå %"
+    "levelHint": "laddningsnivå %",
+    "supportAuthorButton": "Stöd författaren"
 }

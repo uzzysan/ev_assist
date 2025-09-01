@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ev_assist/l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // --- AD BANNER WIDGET ---
 class AdBannerWidget extends StatelessWidget {
@@ -487,6 +488,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(l10n.calculate, style: GoogleFonts.montserrat()),
                 ),
               ),
+              const SizedBox(height: 8), // Mały odstęp
+              SizedBox(
+                width: double.infinity,
+                child: Builder(
+                  builder: (context) {
+                    TextButton(
+                      onPressed: _launchSupportURL,
+                      child: Text(
+                        l10n.supportAuthorButton,
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -528,6 +547,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Text(title, style: Theme.of(context).textTheme.titleMedium),
+    );
+  }
+}
+
+void _launchSupportURL() async {
+  final Uri url = Uri.parse('https://paypal.me/RMaculewicz');
+  if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Nie można otworzyć linku: ${url.toString()}')),
     );
   }
 }

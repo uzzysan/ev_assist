@@ -270,6 +270,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'charge level %'**
   String get levelHint;
+
+  /// No description provided for @supportAuthorButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Support the author'**
+  String get supportAuthorButton;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

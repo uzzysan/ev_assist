@@ -26,5 +26,6 @@
     "distanceHint": "für welche Entfernung",
     "destinationDistanceHint": "Entfernung zum nächsten Ziel",
     "capacityHint": "Batteriekapazität",
-    "levelHint": "Ladestand %"
+    "levelHint": "Ladestand %",
+    "supportAuthorButton": "Unterstützen Sie den Autor"
 }

@@ -92,4 +92,7 @@ class AppLocalizationsSe extends AppLocalizations {
 
   @override
   String get levelHint => 'laddningsnivå %';
+
+  @override
+  String get supportAuthorButton => 'Stöd författaren';
 }

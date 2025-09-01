@@ -26,5 +26,6 @@
     "distanceHint": "mille etäisyydelle",
     "destinationDistanceHint": "etäisyys seuraavaan kohteeseen",
     "capacityHint": "akun kapasiteetti",
-    "levelHint": "lataustaso %"
+    "levelHint": "lataustaso %",
+    "supportAuthorButton": "Tue kirjoittajaa"
 }

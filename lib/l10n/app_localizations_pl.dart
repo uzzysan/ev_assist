@@ -92,4 +92,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get levelHint => 'poziom naładowania %';
+
+  @override
+  String get supportAuthorButton => 'Wesprzyj autora';
 }
