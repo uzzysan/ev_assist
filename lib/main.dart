@@ -190,20 +190,87 @@ class EvAssistApp extends StatelessWidget {
                 AppLocalizations.of(context)!.appTitle,
             theme: ThemeData(
               brightness: Brightness.light,
-              primarySwatch: Colors.blue,
               useMaterial3: true,
               colorScheme: ColorScheme.fromSeed(
-                seedColor: Colors.blue,
+                seedColor: const Color(0xFF2196F3),
                 brightness: Brightness.light,
+              ).copyWith(
+                surface: const Color(0xFFF8F9FA),
+                surfaceContainer: const Color(0xFFFFFFFF),
+                surfaceContainerHighest: const Color(0xFFF0F0F0),
+              ),
+              cardTheme: const CardTheme(
+                elevation: 2,
+                margin: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+              ),
+              inputDecorationTheme: InputDecorationTheme(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Color(0xFF2196F3), width: 2),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              ),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  elevation: 3,
+                  shadowColor: Colors.black26,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
               ),
             ),
             darkTheme: ThemeData(
               brightness: Brightness.dark,
-              primarySwatch: Colors.blue,
               useMaterial3: true,
               colorScheme: ColorScheme.fromSeed(
-                seedColor: Colors.blue,
+                seedColor: const Color(0xFF64B5F6),
                 brightness: Brightness.dark,
+              ).copyWith(
+                surface: const Color(0xFF121212),
+                surfaceContainer: const Color(0xFF1E1E1E),
+                surfaceContainerHighest: const Color(0xFF2A2A2A),
+              ),
+              cardTheme: const CardTheme(
+                elevation: 4,
+                margin: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+                color: Color(0xFF1E1E1E),
+              ),
+              inputDecorationTheme: InputDecorationTheme(
+                filled: true,
+                fillColor: const Color(0xFF2A2A2A),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Color(0xFF404040)),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Color(0xFF404040)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: Color(0xFF64B5F6), width: 2),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              ),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  elevation: 4,
+                  shadowColor: Colors.black54,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
               ),
             ),
             themeMode: themeProvider.themeMode,
@@ -392,124 +459,190 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Logo na górze (teraz zależne od motywu)
-              const Padding(
-                padding: EdgeInsets.only(bottom: 16.0),
-                child: Center(
-                  child: TopLogo(), // Używamy naszego nowego widgetu!
-                ),
-              ),
-              _buildSectionTitle(l10n.averageConsumption),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildTextField(
-                      controller: _avgConsumptionController,
-                      label: l10n.consumptionHint,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _buildTextField(
-                      controller: _avgConsumptionDistanceController,
-                      label: l10n.distanceHint,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              _buildSectionTitle(l10n.destinationDistanceHint),
-              _buildTextField(
-                controller: _destinationDistanceController,
-                label: l10n.destinationDistanceHint,
-              ),
-              const SizedBox(height: 16),
-              _buildSectionTitle(l10n.totalBatteryCapacity),
-              _buildTextField(
-                controller: _totalCapacityController,
-                label: l10n.capacityHint,
-              ),
-              // RadioGroup for capacity selection (modern API)
-              RadioGroupScope<CapacityType>(
-                groupValue: _capacityType,
-                onChanged: (CapacityType? v) => setState(() {
-                  if (v != null) _capacityType = v;
-                }),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: RadioOption<CapacityType>(
-                        value: CapacityType.net,
-                        title: Text(l10n.net),
-                      ),
-                    ),
-                    Expanded(
-                      child: RadioOption<CapacityType>(
-                        value: CapacityType.gross,
-                        title: Text(l10n.gross),
-                      ),
-                    ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: Theme.of(context).brightness == Brightness.light
+                ? [
+                    const Color(0xFFF8F9FA),
+                    const Color(0xFFE9ECEF),
+                  ]
+                : [
+                    const Color(0xFF121212),
+                    const Color(0xFF1A1A1A),
                   ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              _buildSectionTitle(l10n.currentBatteryLevel),
-              _buildTextField(
-                controller: _currentLevelController,
-                label: l10n.levelHint,
-                suffix: '%',
-              ),
-              const SizedBox(height: 16),
-              _buildSectionTitle(l10n.desiredArrivalLevel),
-              _buildTextField(
-                controller: _desiredLevelController,
-                label: l10n.levelHint,
-                suffix: '%',
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _calculate,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    textStyle: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  child: Text(l10n.calculate, style: GoogleFonts.montserrat()),
-                ),
-              ),
-              const SizedBox(height: 8), // Mały odstęp
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _showSupportOptions,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightBlue,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: Text(
-                    l10n.supportAuthorButton,
-                    style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Logo section with enhanced styling
+                Card(
+                  elevation: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Center(
+                      child: TopLogo(),
                     ),
                   ),
                 ),
-              ),
+                const SizedBox(height: 20),
+                
+                // Consumption section
+                _buildSection(
+                  title: l10n.averageConsumption,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildTextField(
+                              controller: _avgConsumptionController,
+                              label: l10n.consumptionHint,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _buildTextField(
+                              controller: _avgConsumptionDistanceController,
+                              label: l10n.distanceHint,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                
+                // Destination section
+                _buildSection(
+                  title: l10n.destinationDistanceHint,
+                  child: _buildTextField(
+                    controller: _destinationDistanceController,
+                    label: l10n.destinationDistanceHint,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                
+                // Battery capacity section
+                _buildSection(
+                  title: l10n.totalBatteryCapacity,
+                  child: Column(
+                    children: [
+                      _buildTextField(
+                        controller: _totalCapacityController,
+                        label: l10n.capacityHint,
+                      ),
+                      const SizedBox(height: 16),
+                      RadioGroupScope<CapacityType>(
+                        groupValue: _capacityType,
+                        onChanged: (CapacityType? v) => setState(() {
+                          if (v != null) _capacityType = v;
+                        }),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: RadioOption<CapacityType>(
+                                value: CapacityType.net,
+                                title: Text(l10n.net, style: GoogleFonts.montserrat()),
+                              ),
+                            ),
+                            Expanded(
+                              child: RadioOption<CapacityType>(
+                                value: CapacityType.gross,
+                                title: Text(l10n.gross, style: GoogleFonts.montserrat()),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                
+                // Battery levels section
+                _buildSection(
+                  title: 'Battery Levels',
+                  child: Column(
+                    children: [
+                      _buildTextField(
+                        controller: _currentLevelController,
+                        label: l10n.currentBatteryLevel,
+                        suffix: '%',
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        controller: _desiredLevelController,
+                        label: l10n.desiredArrivalLevel,
+                        suffix: '%',
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 32),
+                
+                // Action buttons section
+                Card(
+                  elevation: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          height: 54,
+                          child: ElevatedButton.icon(
+                            onPressed: _calculate,
+                            icon: const Icon(Icons.calculate, size: 24),
+                            label: Text(
+                              l10n.calculate,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Theme.of(context).colorScheme.primary,
+                              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                              elevation: 4,
+                              shadowColor: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: ElevatedButton.icon(
+                            onPressed: _showSupportOptions,
+                            icon: const Icon(Icons.favorite, size: 20),
+                            label: Text(
+                              l10n.supportAuthorButton,
+                              style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.lightBlue.shade400,
+                              foregroundColor: Colors.white,
+                              elevation: 2,
+                              shadowColor: Colors.lightBlue.withOpacity(0.3),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
@@ -530,10 +663,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return TextFormField(
       controller: controller,
       keyboardType: TextInputType.number,
+      style: GoogleFonts.montserrat(fontSize: 16),
       decoration: InputDecoration(
         labelText: label,
+        labelStyle: GoogleFonts.montserrat(),
         suffixText: suffix,
-        border: const OutlineInputBorder(),
+        suffixStyle: GoogleFonts.montserrat(
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+        ),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -544,6 +681,30 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         return null;
       },
+    );
+  }
+
+  Widget _buildSection({required String title, required Widget child}) {
+    return Card(
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: GoogleFonts.montserrat(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            const SizedBox(height: 16),
+            child,
+          ],
+        ),
+      ),
     );
   }
 
