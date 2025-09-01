@@ -191,14 +191,15 @@ class EvAssistApp extends StatelessWidget {
             theme: ThemeData(
               brightness: Brightness.light,
               useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color(0xFF2196F3),
-                brightness: Brightness.light,
-              ).copyWith(
-                surface: const Color(0xFFF8F9FA),
-                surfaceContainer: const Color(0xFFFFFFFF),
-                surfaceContainerHighest: const Color(0xFFF0F0F0),
-              ),
+              colorScheme:
+                  ColorScheme.fromSeed(
+                    seedColor: const Color(0xFF2196F3),
+                    brightness: Brightness.light,
+                  ).copyWith(
+                    surface: const Color(0xFFF8F9FA),
+                    surfaceContainer: const Color(0xFFFFFFFF),
+                    surfaceContainerHighest: const Color(0xFFF0F0F0),
+                  ),
               cardTheme: const CardThemeData(
                 elevation: 2,
                 margin: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
@@ -216,9 +217,15 @@ class EvAssistApp extends StatelessWidget {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF2196F3), width: 2),
+                  borderSide: const BorderSide(
+                    color: Color(0xFF2196F3),
+                    width: 2,
+                  ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
               ),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
@@ -233,14 +240,15 @@ class EvAssistApp extends StatelessWidget {
             darkTheme: ThemeData(
               brightness: Brightness.dark,
               useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color(0xFF64B5F6),
-                brightness: Brightness.dark,
-              ).copyWith(
-                surface: const Color(0xFF121212),
-                surfaceContainer: const Color(0xFF1E1E1E),
-                surfaceContainerHighest: const Color(0xFF2A2A2A),
-              ),
+              colorScheme:
+                  ColorScheme.fromSeed(
+                    seedColor: const Color(0xFF64B5F6),
+                    brightness: Brightness.dark,
+                  ).copyWith(
+                    surface: const Color(0xFF121212),
+                    surfaceContainer: const Color(0xFF1E1E1E),
+                    surfaceContainerHighest: const Color(0xFF2A2A2A),
+                  ),
               cardTheme: const CardThemeData(
                 elevation: 4,
                 margin: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
@@ -259,9 +267,15 @@ class EvAssistApp extends StatelessWidget {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF64B5F6), width: 2),
+                  borderSide: const BorderSide(
+                    color: Color(0xFF64B5F6),
+                    width: 2,
+                  ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
               ),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
@@ -465,14 +479,8 @@ class _HomeScreenState extends State<HomeScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: Theme.of(context).brightness == Brightness.light
-                ? [
-                    const Color(0xFFF8F9FA),
-                    const Color(0xFFE9ECEF),
-                  ]
-                : [
-                    const Color(0xFF121212),
-                    const Color(0xFF1A1A1A),
-                  ],
+                ? [const Color(0xFFF8F9FA), const Color(0xFFE9ECEF)]
+                : [const Color(0xFF121212), const Color(0xFF1A1A1A)],
           ),
         ),
         child: SingleChildScrollView(
@@ -487,13 +495,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   elevation: 4,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Center(
-                      child: TopLogo(),
-                    ),
+                    child: Center(child: TopLogo()),
                   ),
                 ),
                 const SizedBox(height: 20),
-                
+
                 // Consumption section
                 _buildSection(
                   title: l10n.averageConsumption,
@@ -520,7 +526,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Destination section
                 _buildSection(
                   title: l10n.destinationDistanceHint,
@@ -530,7 +536,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Battery capacity section
                 _buildSection(
                   title: l10n.totalBatteryCapacity,
@@ -551,13 +557,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             Expanded(
                               child: RadioOption<CapacityType>(
                                 value: CapacityType.net,
-                                title: Text(l10n.net, style: GoogleFonts.montserrat()),
+                                title: Text(
+                                  l10n.net,
+                                  style: GoogleFonts.montserrat(),
+                                ),
                               ),
                             ),
                             Expanded(
                               child: RadioOption<CapacityType>(
                                 value: CapacityType.gross,
-                                title: Text(l10n.gross, style: GoogleFonts.montserrat()),
+                                title: Text(
+                                  l10n.gross,
+                                  style: GoogleFonts.montserrat(),
+                                ),
                               ),
                             ),
                           ],
@@ -567,7 +579,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Battery levels section
                 _buildSection(
                   title: 'Battery Levels',
@@ -588,7 +600,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 32),
-                
+
                 // Action buttons section
                 Card(
                   elevation: 3,
@@ -610,10 +622,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).colorScheme.primary,
-                              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                              backgroundColor: Theme.of(
+                                context,
+                              ).colorScheme.primary,
+                              foregroundColor: Theme.of(
+                                context,
+                              ).colorScheme.onPrimary,
                               elevation: 4,
-                              shadowColor: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                              shadowColor: Theme.of(
+                                context,
+                              ).colorScheme.primary.withOpacity(0.4),
                             ),
                           ),
                         ),
@@ -643,7 +661,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -785,7 +804,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 }
-
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
