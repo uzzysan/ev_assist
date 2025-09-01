@@ -22,9 +22,10 @@
     "dark": "Dunkel",
     "system": "System",
     "language": "Sprache",
-    "consumptionHint": "kWh/100km oder Meilen",
+    "consumptionHint": "kWh",
     "distanceHint": "für welche Entfernung",
     "destinationDistanceHint": "Entfernung zum nächsten Ziel",
     "capacityHint": "Batteriekapazität",
-    "levelHint": "Ladestand %"
+    "levelHint": "Ladestand %",
+    "supportAuthorButton": "Unterstützen Sie den Autor"
 }

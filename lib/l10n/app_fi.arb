@@ -22,9 +22,10 @@
     "dark": "Tumma",
     "system": "Järjestelmä",
     "language": "Kieli",
-    "consumptionHint": "kWh/100km tai mailia",
+    "consumptionHint": "kWh",
     "distanceHint": "mille etäisyydelle",
     "destinationDistanceHint": "etäisyys seuraavaan kohteeseen",
     "capacityHint": "akun kapasiteetti",
-    "levelHint": "lataustaso %"
+    "levelHint": "lataustaso %",
+    "supportAuthorButton": "Tue kirjoittajaa"
 }

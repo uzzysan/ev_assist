@@ -79,7 +79,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get language => 'Langue';
 
   @override
-  String get consumptionHint => 'kWh/100km ou miles';
+  String get consumptionHint => 'kWh';
 
   @override
   String get distanceHint => 'pour quelle distance';
@@ -92,4 +92,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get levelHint => 'niveau de charge %';
+
+  @override
+  String get supportAuthorButton => 'Soutenir l\'auteur';
 }

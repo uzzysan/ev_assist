@@ -244,7 +244,7 @@ abstract class AppLocalizations {
   /// No description provided for @consumptionHint.
   ///
   /// In en, this message translates to:
-  /// **'kWh/100km or miles'**
+  /// **'kWh'**
   String get consumptionHint;
 
   /// No description provided for @distanceHint.
@@ -270,6 +270,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'charge level %'**
   String get levelHint;
+
+  /// No description provided for @supportAuthorButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Support the author'**
+  String get supportAuthorButton;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

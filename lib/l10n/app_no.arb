@@ -22,9 +22,10 @@
     "dark": "Mørk",
     "system": "System",
     "language": "Språk",
-    "consumptionHint": "kWh/100km eller mil",
+    "consumptionHint": "kWh",
     "distanceHint": "for hvilken distanse",
     "destinationDistanceHint": "distanse til neste destinasjon",
     "capacityHint": "batterikapasitet",
-    "levelHint": "ladningsnivå %"
+    "levelHint": "ladningsnivå %",
+    "supportAuthorButton": "Støtt forfatteren"
 }
