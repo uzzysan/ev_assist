@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
@@ -8,6 +9,26 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ev_assist/l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+/// AdMob configuration based on build mode (debug/release)
+class AdMobConfig {
+  // Test AdMob IDs for development
+  static const String _testAppId = 'ca-app-pub-3940256099942544~3347511713';
+  static const String _testBannerId = 'ca-app-pub-3940256099942544/6300978111';
+  
+  // Production AdMob IDs
+  static const String _prodAppId = 'ca-app-pub-3287491879097224~2214382527';
+  static const String _prodBannerId = 'ca-app-pub-3287491879097224/8588219186';
+  
+  /// Returns appropriate AdMob App ID based on build mode
+  static String get appId => kDebugMode ? _testAppId : _prodAppId;
+  
+  /// Returns appropriate AdMob Banner ID based on build mode
+  static String get bannerId => kDebugMode ? _testBannerId : _prodBannerId;
+  
+  /// Returns true if we're using test ads
+  static bool get isTestMode => kDebugMode;
+}
 
 // --- AD BANNER WIDGET ---
 class AdBannerWidget extends StatelessWidget {
@@ -39,7 +60,7 @@ class _AdBannerWidgetImplState extends State<_AdBannerWidgetImpl> {
   void initState() {
     super.initState();
     _bannerAd = BannerAd(
-      adUnitId: 'ca-app-pub-3287491879097224/8588219186',
+      adUnitId: AdMobConfig.bannerId,
       request: const AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
@@ -666,10 +687,31 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        alignment: Alignment.center,
-        height: 50,
-        child: const AdBannerWidget(),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Debug indicator for AdMob mode
+          if (AdMobConfig.isTestMode)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              color: Colors.orange,
+              child: Text(
+                '🧪 TEST ADS MODE - Development Only',
+                style: GoogleFonts.montserrat(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          Container(
+            alignment: Alignment.center,
+            height: 50,
+            child: const AdBannerWidget(),
+          ),
+        ],
       ),
     );
   }
