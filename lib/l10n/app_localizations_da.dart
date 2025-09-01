@@ -79,7 +79,7 @@ class AppLocalizationsDa extends AppLocalizations {
   String get language => 'Sprog';
 
   @override
-  String get consumptionHint => 'kWh/100km eller mil';
+  String get consumptionHint => 'kWh';
 
   @override
   String get distanceHint => 'for hvilken afstand';
