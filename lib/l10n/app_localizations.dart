@@ -199,6 +199,12 @@ abstract class AppLocalizations {
   /// **'Reaching the destination with the given parameters is not possible. The required energy ({chargeAmount} kWh) exceeds the battery capacity.'**
   String errorMessage(Object chargeAmount);
 
+  /// No description provided for @destinationOutOfReach.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination is out of reach with the current battery level and given conditions.'**
+  String get destinationOutOfReach;
+
   /// No description provided for @ok.
   ///
   /// In en, this message translates to:

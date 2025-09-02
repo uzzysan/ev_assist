@@ -15,6 +15,7 @@
     "warningTitle": "Varoitus",
     "chargeMessage": "Saadaksesi määränpäähän oletetulla varauksella, sinun tulee ladata {chargeAmount} kWh.",
     "errorMessage": "Määränpäähän pääseminen annetuilla parametreilla ei ole mahdollista. Tarvittava energia ({chargeAmount} kWh) ylittää akun kapasiteetin.",
+    "destinationOutOfReach": "Määränpää on saavuttamattomissa nykyisellä akun tasolla ja annetuissa olosuhteissa.",
     "ok": "OK",
     "settings": "Asetukset",
     "theme": "Teema",

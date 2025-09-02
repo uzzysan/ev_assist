@@ -58,6 +58,9 @@ class AppLocalizationsFi extends AppLocalizations {
   }
 
   @override
+  String get destinationOutOfReach => 'Määränpää on saavuttamattomissa nykyisellä akun tasolla ja annetuissa olosuhteissa.';
+
+  @override
   String get ok => 'OK';
 
   @override

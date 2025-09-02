@@ -58,6 +58,9 @@ class AppLocalizationsNo extends AppLocalizations {
   }
 
   @override
+  String get destinationOutOfReach => 'Destinasjonen er utenfor rekkevidde med nåværende batterinivå og gitte forhold.';
+
+  @override
   String get ok => 'OK';
 
   @override

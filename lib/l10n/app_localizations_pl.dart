@@ -58,6 +58,9 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
+  String get destinationOutOfReach => 'Cel jest poza zasięgiem przy obecnym poziomie baterii i danych warunkach.';
+
+  @override
   String get ok => 'OK';
 
   @override

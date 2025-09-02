@@ -394,6 +394,11 @@ class _HomeScreenState extends State<HomeScreen> {
           title: l10n.warningTitle,
           content: l10n.errorMessage(chrg.toStringAsFixed(2)),
         );
+      } else if (chrg + curr > cap) {
+        _showResultDialog(
+          title: l10n.warningTitle,
+          content: l10n.destinationOutOfReach,
+        );
       } else {
         _showResultDialog(
           title: l10n.resultTitle,

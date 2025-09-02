@@ -15,6 +15,7 @@
     "warningTitle": "Warnung",
     "chargeMessage": "Um Ihr Ziel mit der angenommenen Reserve zu erreichen, müssen Sie {chargeAmount} kWh laden.",
     "errorMessage": "Das Erreichen des Ziels mit den angegebenen Parametern ist nicht möglich. Die benötigte Energie ({chargeAmount} kWh) übersteigt die Batteriekapazität.",
+    "destinationOutOfReach": "Das Ziel ist mit dem aktuellen Batteriestand und den gegebenen Bedingungen nicht erreichbar.",
     "ok": "OK",
     "settings": "Einstellungen",
     "theme": "Thema",

@@ -15,6 +15,7 @@
     "warningTitle": "Ostrzeżenie",
     "chargeMessage": "Aby dotrzeć do celu z zakładaną rezerwą, musisz doładować {chargeAmount} kWh.",
     "errorMessage": "Osiągnięcie celu z zadanymi parametrami nie jest możliwe. Wymagana energia ({chargeAmount} kWh) przekracza pojemność baterii.",
+    "destinationOutOfReach": "Cel jest poza zasięgiem przy obecnym poziomie baterii i danych warunkach.",
     "ok": "OK",
     "settings": "Ustawienia",
     "theme": "Motyw",

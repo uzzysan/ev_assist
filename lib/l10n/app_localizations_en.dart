@@ -58,6 +58,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get destinationOutOfReach => 'Destination is out of reach with the current battery level and given conditions.';
+
+  @override
   String get ok => 'OK';
 
   @override

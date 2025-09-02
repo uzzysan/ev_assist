@@ -15,6 +15,7 @@
     "warningTitle": "Advarsel",
     "chargeMessage": "For at nå din destination med den antagede reserve skal du oplade {chargeAmount} kWh.",
     "errorMessage": "Det er ikke muligt at nå destinationen med de givne parametre. Den krævede energi ({chargeAmount} kWh) overstiger batteriets kapacitet.",
+    "destinationOutOfReach": "Destinationen kan ikke nås med det nuværende batteriniveau og de givne betingelser.",
     "ok": "OK",
     "settings": "Indstillinger",
     "theme": "Tema",

@@ -15,6 +15,7 @@
     "warningTitle": "Warning",
     "chargeMessage": "To reach your destination with the assumed reserve, you need to charge {chargeAmount} kWh.",
     "errorMessage": "Reaching the destination with the given parameters is not possible. The required energy ({chargeAmount} kWh) exceeds the battery capacity.",
+    "destinationOutOfReach": "Destination is out of reach with the current battery level and given conditions.",
     "ok": "OK",
     "settings": "Settings",
     "theme": "Theme",
