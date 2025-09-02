@@ -14,6 +14,10 @@ for /L %%i in (0,1,2) do (
 
 echo Checking for Android device screenshot location...
 adb shell "find /data/user/0/com.example.ev_assist/code_cache/ev_assist_screenshots/screenshots -name '*.png' 2>/dev/null" > temp_list.txt
+if %ERRORLEVEL% NEQ 0 (
+    echo Checking alternative Android location...
+    adb shell "find /data/user/0/com.example.ev_assist/code_cache/android_screenshots/screenshots -name '*.png' 2>/dev/null" > temp_list.txt
+)
 if %ERRORLEVEL% EQU 0 (
     for /f "tokens=*" %%a in (temp_list.txt) do (
         echo Found: %%a
