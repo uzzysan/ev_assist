@@ -10,22 +10,46 @@ import 'package:ev_assist/l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// Helper function to get fonts with fallback for tests
+TextStyle _getTextStyle({
+  double? fontSize,
+  FontWeight? fontWeight,
+  Color? color,
+}) {
+  // Try to use Google Fonts, but fall back to system fonts if it fails
+  try {
+    return GoogleFonts.montserrat(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+    );
+  } catch (e) {
+    // If Google Fonts fails (e.g., during testing), use system fonts
+    return TextStyle(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      fontFamily: 'Roboto', // Default Android font
+    );
+  }
+}
+
 /// AdMob configuration based on build mode (debug/release)
 class AdMobConfig {
   // Test AdMob IDs for development
   static const String _testAppId = 'ca-app-pub-3940256099942544~3347511713';
   static const String _testBannerId = 'ca-app-pub-3940256099942544/6300978111';
-  
+
   // Production AdMob IDs
   static const String _prodAppId = 'ca-app-pub-3287491879097224~2214382527';
   static const String _prodBannerId = 'ca-app-pub-3287491879097224/8588219186';
-  
+
   /// Returns appropriate AdMob App ID based on build mode
   static String get appId => kDebugMode ? _testAppId : _prodAppId;
-  
+
   /// Returns appropriate AdMob Banner ID based on build mode
   static String get bannerId => kDebugMode ? _testBannerId : _prodBannerId;
-  
+
   /// Returns true if we're using test ads
   static bool get isTestMode => kDebugMode;
 }
@@ -433,7 +457,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(
           l10n.appTitle,
-          style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
+          style: _getTextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         actions: [
@@ -583,19 +607,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             Expanded(
                               child: RadioOption<CapacityType>(
                                 value: CapacityType.net,
-                                title: Text(
-                                  l10n.net,
-                                  style: GoogleFonts.montserrat(),
-                                ),
+                                title: Text(l10n.net, style: _getTextStyle()),
                               ),
                             ),
                             Expanded(
                               child: RadioOption<CapacityType>(
                                 value: CapacityType.gross,
-                                title: Text(
-                                  l10n.gross,
-                                  style: GoogleFonts.montserrat(),
-                                ),
+                                title: Text(l10n.gross, style: _getTextStyle()),
                               ),
                             ),
                           ],
@@ -642,7 +660,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: const Icon(Icons.calculate, size: 24),
                             label: Text(
                               l10n.calculate,
-                              style: GoogleFonts.montserrat(
+                              style: _getTextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -670,7 +688,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: const Icon(Icons.favorite, size: 20),
                             label: Text(
                               l10n.supportAuthorButton,
-                              style: GoogleFonts.montserrat(
+                              style: _getTextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                               ),
@@ -703,7 +721,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.orange,
               child: Text(
                 '🧪 TEST ADS MODE - Development Only',
-                style: GoogleFonts.montserrat(
+                style: _getTextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -729,12 +747,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return TextFormField(
       controller: controller,
       keyboardType: TextInputType.number,
-      style: GoogleFonts.montserrat(fontSize: 16),
+      style: _getTextStyle(fontSize: 16),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: GoogleFonts.montserrat(),
+        labelStyle: _getTextStyle(),
         suffixText: suffix,
-        suffixStyle: GoogleFonts.montserrat(
+        suffixStyle: _getTextStyle(
           color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
         ),
       ),
@@ -795,7 +813,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Text(
               'Choose your preferred support method:',
-              style: GoogleFonts.montserrat(),
+              style: _getTextStyle(),
             ),
             const SizedBox(height: 16),
             SizedBox(

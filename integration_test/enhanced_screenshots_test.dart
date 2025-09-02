@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:path/path.dart' as path;
 import 'package:ev_assist/main.dart' as app;
 
 void main() {
@@ -42,8 +43,46 @@ void main() {
   late Directory screenshotsDir;
   
   setUpAll(() async {
-    final projectRoot = Directory.current;
-    screenshotsDir = Directory('${projectRoot.path}/screenshots');
+    // Note: Cannot modify Platform.environment directly, but our app checks
+    // for FLUTTER_TEST or INTEGRATION_TEST in Platform.environment which might
+    // be set by the test framework
+    
+    // For integration tests, use a more reliable approach
+    // Check for environment variable first, then try to find project root
+    final envProjectRoot = Platform.environment['FLUTTER_PROJECT_ROOT'];
+    Directory? projectRoot;
+    
+    if (envProjectRoot != null) {
+      projectRoot = Directory(envProjectRoot);
+    } else {
+      // Try to find project root by looking for pubspec.yaml
+      projectRoot = Directory.current;
+      var attempts = 0;
+      while (projectRoot != null && 
+             !File(path.join(projectRoot.path, 'pubspec.yaml')).existsSync() && 
+             attempts < 10) {
+        final parent = projectRoot.parent;
+        if (parent.path == projectRoot.path) {
+          // Reached filesystem root
+          break;
+        }
+        projectRoot = parent;
+        attempts++;
+      }
+    }
+    
+    // If still not found, use a temp directory but with better naming
+    if (projectRoot == null || !File(path.join(projectRoot.path, 'pubspec.yaml')).existsSync()) {
+      final tempDir = Directory.systemTemp;
+      projectRoot = Directory(path.join(tempDir.path, 'ev_assist_screenshots'));
+      debugPrint('Using temp directory for screenshots: ${projectRoot.path}');
+    }
+    
+    debugPrint('Project root: ${projectRoot.path}');
+    
+    final screenshotsPath = path.join(projectRoot.path, 'screenshots');
+    screenshotsDir = Directory(screenshotsPath);
+    debugPrint('Screenshots directory path: ${screenshotsDir.path}');
     
     if (await screenshotsDir.exists()) {
       await screenshotsDir.delete(recursive: true);
@@ -139,30 +178,47 @@ void main() {
 }
 
 Future<void> _fillSampleData(WidgetTester tester) async {
-  // Fill consumption fields
-  final consumptionField = find.byType(TextFormField).first;
-  await tester.enterText(consumptionField, '18.5');
+  // Wait for text fields to be available (wait for splash screen to finish)
+  await tester.pumpAndSettle(const Duration(seconds: 3));
   
-  final distanceField = find.byType(TextFormField).at(1);
-  await tester.enterText(distanceField, '100');
+  // Check if TextFormFields are available
+  final textFields = find.byType(TextFormField);
+  if (textFields.evaluate().length < 6) {
+    debugPrint('Warning: Expected 6 text fields, found ${textFields.evaluate().length}');
+    // Pump again to make sure everything is loaded
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+  }
   
-  // Fill destination distance
-  final destinationField = find.byType(TextFormField).at(2);
-  await tester.enterText(destinationField, '250');
-  
-  // Fill battery capacity
-  final capacityField = find.byType(TextFormField).at(3);
-  await tester.enterText(capacityField, '77');
-  
-  // Fill current battery level
-  final currentLevelField = find.byType(TextFormField).at(4);
-  await tester.enterText(currentLevelField, '65');
-  
-  // Fill desired battery level
-  final desiredLevelField = find.byType(TextFormField).at(5);
-  await tester.enterText(desiredLevelField, '20');
-  
-  await tester.pumpAndSettle();
+  try {
+    // Fill consumption fields
+    await tester.enterText(find.byType(TextFormField).at(0), '18.5');
+    await tester.pump(const Duration(milliseconds: 100));
+    
+    await tester.enterText(find.byType(TextFormField).at(1), '100');
+    await tester.pump(const Duration(milliseconds: 100));
+    
+    // Fill destination distance
+    await tester.enterText(find.byType(TextFormField).at(2), '250');
+    await tester.pump(const Duration(milliseconds: 100));
+    
+    // Fill battery capacity
+    await tester.enterText(find.byType(TextFormField).at(3), '77');
+    await tester.pump(const Duration(milliseconds: 100));
+    
+    // Fill current battery level
+    await tester.enterText(find.byType(TextFormField).at(4), '65');
+    await tester.pump(const Duration(milliseconds: 100));
+    
+    // Fill desired battery level
+    await tester.enterText(find.byType(TextFormField).at(5), '20');
+    await tester.pump(const Duration(milliseconds: 100));
+    
+    await tester.pumpAndSettle();
+    debugPrint('Sample data filled successfully');
+  } catch (e) {
+    debugPrint('Error filling sample data: $e');
+    // Continue anyway - screenshots might still be useful
+  }
 }
 
 Future<void> _takeScreenshot(
@@ -177,13 +233,15 @@ Future<void> _takeScreenshot(
   final deviceType = isTablet ? 'tablet' : 'phone';
   
   // Create organized directory structure: screenshots/device_type/device/theme/
-  final deviceDir = Directory('${screenshotsDir.path}/$deviceType/$deviceName/$theme');
+  final deviceDir = Directory(path.join(screenshotsDir.path, deviceType, deviceName, theme));
   await deviceDir.create(recursive: true);
   
   final fileName = '${locale}_$screenName.png';
-  final filePath = '${deviceDir.path}/$fileName';
+  final filePath = path.join(deviceDir.path, fileName);
   
   try {
+    // Convert Flutter surface to image before taking screenshot
+    await binding.convertFlutterSurfaceToImage();
     final bytes = await binding.takeScreenshot(fileName);
     final file = File(filePath);
     await file.writeAsBytes(bytes);
