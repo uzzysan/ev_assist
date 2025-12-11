@@ -37,17 +37,26 @@ void main(List<String> arguments) async {
     exit(1);
   }
 
-  // Choose test file
+  // Choose test file - use desktop for reliable screenshot generation
   final testFile = useEnhanced 
       ? 'integration_test/enhanced_screenshots_test.dart'
-      : 'integration_test/screenshots_test.dart';
+      : 'integration_test/desktop_screenshots_test.dart';
   
   if (!await File(testFile).exists()) {
     print('❌ Error: Test file $testFile does not exist');
+    print('Available test files:');
+    final integrationTestDir = Directory('integration_test');
+    if (await integrationTestDir.exists()) {
+      await for (final entity in integrationTestDir.list()) {
+        if (entity is File && entity.path.endsWith('_test.dart')) {
+          print('  - ${entity.path}');
+        }
+      }
+    }
     exit(1);
   }
 
-  print('📱 Using test file: $testFile');
+  print('🖥️ Using test file: $testFile (desktop mode)');
   
   // Build filters based on arguments
   List<String> nameFilters = [];
@@ -86,6 +95,7 @@ void main(List<String> arguments) async {
   final testArgs = [
     'test',
     testFile,
+    '--device-id=windows', // Force Windows desktop
     '--verbose',
     ...nameFilters,
   ];

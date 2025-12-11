@@ -69,6 +69,9 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // Convert surface to image before taking screenshot
+      await binding.convertFlutterSurfaceToImage();
+      
       // Save screenshot into system temp directory (writable on device/emulator)
       final tmpDir = await Directory.systemTemp.createTemp(
         'ev_assist_screenshots_',

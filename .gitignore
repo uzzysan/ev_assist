@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+design_template/
 
 # Flutter/Dart
 .dart_tool/
@@ -62,3 +63,5 @@ pubspec.lock
 CLAUDE.md
 .gitignore
 .claude/settings.local.json
+WARP.md
+.continue/mcpServers/new-mcp-server.yaml

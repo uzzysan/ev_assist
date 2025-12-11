@@ -61,7 +61,9 @@ class AdBannerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // W testach widgetowych zwracaj pusty widget
-    if (const bool.fromEnvironment('FLUTTER_TEST')) {
+    if (const bool.fromEnvironment('FLUTTER_TEST') || 
+        const bool.fromEnvironment('IS_TEST') ||
+        kDebugMode && Platform.environment.containsKey('FLUTTER_TEST')) {
       return const SizedBox.shrink();
     }
     // ...normalny kod reklamy...
@@ -218,18 +220,35 @@ void main() {
 class EvAssistApp extends StatelessWidget {
   final Locale? locale;
   final ThemeMode? themeMode;
+  final bool skipSplash;
 
-  const EvAssistApp({super.key, this.locale, this.themeMode});
+  const EvAssistApp({super.key, this.locale, this.themeMode, this.skipSplash = false});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) {
+          final provider = ThemeProvider();
+          if (themeMode != null) {
+            provider.setThemeMode(themeMode!);
+          }
+          return provider;
+        }),
+        ChangeNotifierProvider(create: (_) {
+          final provider = LocaleProvider();
+          if (locale != null) {
+            provider.setLocale(locale!);
+          }
+          return provider;
+        }),
       ],
       child: Consumer2<ThemeProvider, LocaleProvider>(
         builder: (context, themeProvider, localeProvider, child) {
+          // Use custom values if provided, otherwise use provider values
+          final effectiveTheme = themeMode ?? themeProvider.themeMode;
+          final effectiveLocale = locale ?? localeProvider.locale;
+          
           return MaterialApp(
             onGenerateTitle: (context) =>
                 AppLocalizations.of(context)!.appTitle,
@@ -332,8 +351,8 @@ class EvAssistApp extends StatelessWidget {
                 ),
               ),
             ),
-            themeMode: themeProvider.themeMode,
-            locale: localeProvider.locale,
+            themeMode: effectiveTheme,
+            locale: effectiveLocale,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -351,7 +370,7 @@ class EvAssistApp extends StatelessWidget {
               Locale('pl'), // Polish
               Locale('se'), // Swedish
             ],
-            home: const SplashScreen(),
+            home: skipSplash ? const HomeScreen() : const SplashScreen(),
           );
         },
       ),
