@@ -106,7 +106,7 @@ export const Calculator: React.FC = () => {
             </Card>
 
             {/* Levels Section */}
-            <Card title="Levels">
+            <Card title={t('batteryLevels')}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                     <Input
                         label={t('currentBatteryLevel')}

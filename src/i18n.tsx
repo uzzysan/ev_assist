@@ -28,7 +28,8 @@ const translations: Record<Locale, Translations> = {
         destinationOutOfReach: 'Destination out of reach even with full charge!',
         settings: 'Settings',
         language: 'Language',
-        theme: 'Theme'
+        theme: 'Theme',
+        batteryLevels: 'Battery Levels'
     },
     pl: {
         appTitle: 'EV Assist',
@@ -50,7 +51,8 @@ const translations: Record<Locale, Translations> = {
         destinationOutOfReach: 'Cel poza zasięgiem nawet przy pełnej baterii!',
         settings: 'Ustawienia',
         language: 'Język',
-        theme: 'Motyw'
+        theme: 'Motyw',
+        batteryLevels: 'Poziom baterii'
     },
     de: { // Minimal placeholders
         appTitle: 'EV Assist',
@@ -72,13 +74,14 @@ const translations: Record<Locale, Translations> = {
         destinationOutOfReach: 'Ziel außerhalb der Reichweite!',
         settings: 'Einstellungen',
         language: 'Sprache',
-        theme: 'Thema'
+        theme: 'Thema',
+        batteryLevels: 'Batteriestand'
     },
     fr: {
         appTitle: 'EV Assist',
         averageConsumption: 'Consommation moyenne',
         consumptionHint: 'Consom. (kWh)',
-        distanceHint: 'from last km',
+        distanceHint: 'sur les derniers km',
         destinationDistanceHint: 'Distance à destination',
         totalBatteryCapacity: 'Capacité batterie',
         net: 'Net',
@@ -94,7 +97,8 @@ const translations: Record<Locale, Translations> = {
         destinationOutOfReach: 'Destination hors de portée !',
         settings: 'Paramètres',
         language: 'Langue',
-        theme: 'Thème'
+        theme: 'Thème',
+        batteryLevels: 'Niveaux de batterie'
     },
     es: {
         appTitle: 'EV Assist',
@@ -116,7 +120,8 @@ const translations: Record<Locale, Translations> = {
         destinationOutOfReach: '¡Destino fuera de alcance!',
         settings: 'Ajustes',
         language: 'Idioma',
-        theme: 'Tema'
+        theme: 'Tema',
+        batteryLevels: 'Niveles de batería'
     },
     it: {
         appTitle: 'EV Assist',
@@ -138,7 +143,8 @@ const translations: Record<Locale, Translations> = {
         destinationOutOfReach: 'Destinazione fuori portata!',
         settings: 'Impostazioni',
         language: 'Lingua',
-        theme: 'Tema'
+        theme: 'Tema',
+        batteryLevels: 'Livelli della batteria'
     }
 };
 
