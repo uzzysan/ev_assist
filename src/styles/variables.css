@@ -1,0 +1,36 @@
+:root {
+  /* Colors */
+  --primary-color: #00bfa5; /* Teal Accent */
+  --primary-hover: #009688;
+  
+  /* Light Theme Defaults */
+  --bg-color: #f0f2f5; /* Ash Gray / Popielaty */
+  --text-color: #1a1a1a;
+  --card-bg: #ffffff;
+  --border-color: #d1d5db;
+  --input-bg: #ffffff;
+  
+  /* Typography */
+  --font-family: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+[data-theme='dark'] {
+  --bg-color: #1e2329; /* Dark Blue-Gray */
+  --text-color: #e0e6ed;
+  --card-bg: #2b323b;
+  --border-color: #374151;
+  --input-bg: #2b323b;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  transition: background-color 0.3s, color 0.3s;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
