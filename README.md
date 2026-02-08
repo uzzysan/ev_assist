@@ -1,46 +1,73 @@
-# EV Assist
+# React + TypeScript + Vite
 
-EV Assist is a specialized mobile application designed to help Electric Vehicle (EV) owners plan their trips with confidence. By analyzing vehicle consumption and trip parameters, it calculates exactly how much charge is required to reach a destination safely, ensuring you never run out of range.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- **Intelligent Charge Calculation**: Computes the precise energy needed based on your vehicle's specific consumption profile.
-- **Safety First**: Incorporates a safety buffer calculation to account for unforeseen circumstances.
-- **Flexible Capacity Handling**: Supports both Net (usable) and Gross (total) battery capacity settings, automatically adjusting for non-usable buffers.
-- **Internationalization**: Fully localized in 9 languages: Danish, German, English, Spanish, Finnish, French, Norwegian, Polish, and Swedish.
-- **Adaptive UI**: Features a modern interface with full support for Light and Dark themes to match your system preferences.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Application Screens
+## React Compiler
 
-The application is structured around a streamlined user experience:
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-1.  **Home Screen**: The primary interface where all trip planning takes place. It contains input fields for vehicle data and trip details, and displays the calculation results.
-2.  **Settings Screen**: Accessible via the gear icon, this screen allows customization of the app's visual theme (System default, Light mode, or Dark mode).
-3.  **Splash Screen**: A theme-aware welcome screen that greets users upon launch.
+## Expanding the ESLint configuration
 
-## How It Works
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### User Inputs through the Home Screen
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-To perform a calculation, the user enters the following data:
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-*   **Average Consumption**: Your EV's energy usage (e.g., in kWh).
-*   **Distance Reference**: The distance corresponding to the consumption value (defaults to 100 for kWh/100km).
-*   **Destination Distance**: The actual distance to your planned destination.
-*   **Total Battery Capacity**: The size of your battery in kWh.
-    *   *Capacity Type*: Choose between **Net** (usable energy) or **Gross** (total capacity). Selecting 'Gross' automatically deducts a 4.0 kWh technical buffer.
-*   **Current Battery Level**: Your current charge percentage (0-100%).
-*   **Desired Arrival Level**: The percentage of battery you want to have remaining when you arrive (e.g., 10% or 20%).
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-### Results & Output
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-Once the **Calculate** button is pressed, the app processes the data and provides immediate feedback:
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-*   **Charge Required**: Displays the exact amount of energy (in kWh) you need to charge to reach your destination with the desired remaining battery level.
-*   **Smart Warnings**:
-    *   If the destination is unreachable even with a full charge.
-    *   If the required charge exceeds the physical limits of the battery.
-
-## Technical Details
-
-Built with **Flutter**, EV Assist leverages the Provider pattern for efficient state management and utilizes Google Mobile Ads for integration. The app employs a robust calculation logic that factors in current energy state, trip consumption, and a standardized 20% consumption safety margin.
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
