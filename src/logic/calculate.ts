@@ -79,6 +79,6 @@ export const calculateCharge = (input: CalculationInput): CalculationResult => {
     return {
         chargeNeeded: chrg,
         isWarning: chrg > cap,
-        isImpossible: (chrg + curr) > cap
+        isImpossible
     };
 };
