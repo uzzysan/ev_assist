@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 flutter_archive/
+
+# AI and Tooling
+.claude/
+.github/
+.continue/
