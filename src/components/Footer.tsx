@@ -22,8 +22,8 @@ export const Footer: React.FC = () => {
                     {t('supportAuthorButton')}
                 </Button>
             </div>
-            <p style={{ marginTop: '1rem', fontSize: '0.875rem', opacity: 0.6 }}>
-                &copy; {new Date().getFullYear()} EV Assist
+            <p style={{ marginTop: '1rem', fontSize: '0.875rem', opacity: 0.6, color: 'var(--text-color)' }}>
+                &copy; 2026 <a href="mailto:rafal.maculewicz@tuta.com" style={{ color: 'inherit', textDecoration: 'underline' }}>Rafał Maculewicz</a>. Wszelkie prawa zastrzeżone.
             </p>
         </div>
     );

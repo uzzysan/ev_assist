@@ -5,10 +5,12 @@ import { ThemeSwitcher } from './components/ThemeSwitcher';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { Calculator } from './components/Calculator';
 import { Footer } from './components/Footer';
+import { SponsorBox } from './components/SponsorBox';
 
 const Layout: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col" style={{ padding: '1rem' }}>
+      <SponsorBox />
       <header style={{
         display: 'flex',
         justifyContent: 'space-between',
