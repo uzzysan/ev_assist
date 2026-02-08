@@ -21,7 +21,8 @@ export const LanguageSwitcher: React.FC = () => {
                     padding: '0.5rem',
                     cursor: 'pointer',
                     fontFamily: 'var(--font-family)',
-                    fontSize: '0.875rem'
+                    fontSize: '0.875rem',
+                    backgroundColor: 'var(--card-bg)', // Ensure dropdown has background
                 }}
                 aria-label={t('language')}
             >
