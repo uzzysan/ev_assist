@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+// No changes needed in Calculator.tsx directly regarding accessibility if Input component handles it correctly.
+// I will inspect Input.tsx next.
+
 import { useI18n } from '../i18n';
 import { calculateCharge, type CalculationResult, type CapacityType } from '../logic/calculate';
 import { Card } from './Card';

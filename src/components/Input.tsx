@@ -6,14 +6,21 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     error?: string;
 }
 
-export const Input: React.FC<InputProps> = ({ label, suffix, error, style, ...props }) => {
+export const Input: React.FC<InputProps> = ({ label, suffix, error, style, id, ...props }) => {
+    // Generate a fallback ID if none provided, to ensure accessibility
+    const inputId = id || `input-${label.replace(/\s+/g, '-').toLowerCase()}-${Math.random().toString(36).substr(2, 9)}`;
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', ...style }}>
-            <label style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-color)', opacity: 0.8 }}>
+            <label
+                htmlFor={inputId}
+                style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-color)', opacity: 0.8 }}
+            >
                 {label}
             </label>
             <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                 <input
+                    id={inputId}
                     {...props}
                     style={{
                         width: '100%',
