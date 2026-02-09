@@ -10,6 +10,7 @@ type Translations = Record<string, string>;
 const translations: Record<Locale, Translations> = {
     en: {
         appTitle: 'EV Assist',
+        appDescription: 'EV Assist helps you plan your journey by calculating necessary battery charge based on consumption and distance.',
         averageConsumption: 'Average Consumption',
         consumptionHint: 'Consumption (kWh)',
         distanceHint: 'from last km',
@@ -33,6 +34,7 @@ const translations: Record<Locale, Translations> = {
     },
     pl: {
         appTitle: 'EV Assist',
+        appDescription: 'EV Assist pomaga zaplanować podróż obliczając potrzebne naładowanie baterii na podstawie zużycia i dystansu.',
         averageConsumption: 'Średnie zużycie',
         consumptionHint: 'Zużycie (kWh)',
         distanceHint: 'z ostatnich km',
@@ -56,6 +58,7 @@ const translations: Record<Locale, Translations> = {
     },
     de: { // Minimal placeholders
         appTitle: 'EV Assist',
+        appDescription: 'EV Assist hilft Ihnen bei der Reiseplanung, indem es die erforderliche Batterieladung basierend auf Verbrauch und Entfernung berechnet.',
         averageConsumption: 'Durchschnittsverbrauch',
         consumptionHint: 'Verbrauch (kWh)',
         distanceHint: 'auf letzten km',
@@ -79,6 +82,7 @@ const translations: Record<Locale, Translations> = {
     },
     fr: {
         appTitle: 'EV Assist',
+        appDescription: 'EV Assist vous aide à planifier votre trajet en calculant la charge de batterie nécessaire en fonction de la consommation et de la distance.',
         averageConsumption: 'Consommation moyenne',
         consumptionHint: 'Consom. (kWh)',
         distanceHint: 'sur les derniers km',
@@ -102,6 +106,7 @@ const translations: Record<Locale, Translations> = {
     },
     es: {
         appTitle: 'EV Assist',
+        appDescription: 'EV Assist te ayuda a planificar tu viaje calculando la carga de batería necesaria según el consumo y la distancia.',
         averageConsumption: 'Consumo medio',
         consumptionHint: 'Consumo (kWh)',
         distanceHint: 'de últimos km',
@@ -125,6 +130,7 @@ const translations: Record<Locale, Translations> = {
     },
     it: {
         appTitle: 'EV Assist',
+        appDescription: 'EV Assist ti aiuta a pianificare il tuo viaggio calcolando la carica della batteria necessaria in base al consumo e alla distanza.',
         averageConsumption: 'Consumo medio',
         consumptionHint: 'Consumo (kWh)',
         distanceHint: 'dagli ultimi km',
