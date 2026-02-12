@@ -1,6 +1,8 @@
 import React from 'react';
+import { useI18n } from '../i18n';
 
 export const SponsorBox: React.FC = () => {
+    const { t } = useI18n();
     return (
         <div style={{
             display: 'flex',
@@ -48,16 +50,16 @@ export const SponsorBox: React.FC = () => {
                         fontSize: '1.25rem',
                         fontWeight: 600
                     }}>
-                        Ta strona będzie zawsze darmowa
+                        {t('sponsorTitle')}
                     </h3>
                     <p style={{ 
                         margin: 0, 
                         opacity: 0.8,
                         lineHeight: 1.5
                     }}>
-                        a to miejsce czeka na jedną firmę<br />
-                        chętną umieścić tu swoje logo z<br />
-                        podpisem <span style={{ color: 'var(--primary-color)', fontWeight: 700 }}>dumny sponsor</span>.
+                        {t('sponsorText1')}<br />
+                        {t('sponsorText2')}<br />
+                        <span style={{ color: 'var(--primary-color)', fontWeight: 700 }}>{t('sponsorBadge')}</span>.
                     </p>
                 </div>
             </div>

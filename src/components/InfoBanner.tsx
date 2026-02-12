@@ -89,7 +89,14 @@ export const InfoBanner: React.FC = () => {
                         </h2>
                     </div>
                     <button
-                        aria-label={isExpanded ? 'Collapse' : 'Expand'}
+                        aria-label={isExpanded ? t('collapse') : t('expand')}
+                        aria-expanded={isExpanded}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                setIsExpanded(!isExpanded);
+                            }
+                        }}
                         style={{
                             background: 'transparent',
                             border: 'none',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
@@ -6,11 +6,10 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     error?: string;
 }
 
-let inputCounter = 0;
-
 export const Input: React.FC<InputProps> = ({ label, suffix, error, style, id, ...props }) => {
-    // Generate a fallback ID if none provided, to ensure accessibility
-    const [inputId] = React.useState(() => id || `input-${label.replace(/\s+/g, '-').toLowerCase()}-${++inputCounter}`);
+    // Use React's built-in useId hook for stable, unique IDs
+    const generatedId = useId();
+    const inputId = id || `${generatedId}-${label.replace(/\s+/g, '-').toLowerCase()}`;
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem', width: '100%', ...style }}>

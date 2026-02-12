@@ -32,7 +32,13 @@ export const translations: Record<Locale, Translations> = {
         settings: 'Settings',
         language: 'Language',
         theme: 'Theme',
-        batteryLevels: 'Battery Levels'
+        batteryLevels: 'Battery Levels',
+        collapse: 'Collapse',
+        expand: 'Expand',
+        sponsorTitle: 'This site will always be free',
+        sponsorText1: 'and this space is waiting for one company',
+        sponsorText2: 'willing to place their logo here with the',
+        sponsorBadge: 'proud sponsor'
     },
     pl: {
         appTitle: 'EV Assist',
@@ -61,7 +67,13 @@ export const translations: Record<Locale, Translations> = {
         settings: 'Ustawienia',
         language: 'Język',
         theme: 'Motyw',
-        batteryLevels: 'Poziom baterii'
+        batteryLevels: 'Poziom baterii',
+        collapse: 'Zwiń',
+        expand: 'Rozwiń',
+        sponsorTitle: 'Ta strona będzie zawsze darmowa',
+        sponsorText1: 'a to miejsce czeka na jedną firmę',
+        sponsorText2: 'chętną umieścić tu swoje logo z',
+        sponsorBadge: 'dumny sponsor'
     },
     de: {
         appTitle: 'EV Assist',
@@ -90,7 +102,13 @@ export const translations: Record<Locale, Translations> = {
         settings: 'Einstellungen',
         language: 'Sprache',
         theme: 'Thema',
-        batteryLevels: 'Batteriestand'
+        batteryLevels: 'Batteriestand',
+        collapse: 'Einklappen',
+        expand: 'Ausklappen',
+        sponsorTitle: 'Diese Seite bleibt immer kostenlos',
+        sponsorText1: 'und dieser Platz wartet auf ein Unternehmen',
+        sponsorText2: 'das bereit ist, sein Logo hier mit dem Titel',
+        sponsorBadge: 'stolzer Sponsor'
     },
     fr: {
         appTitle: 'EV Assist',
@@ -119,7 +137,13 @@ export const translations: Record<Locale, Translations> = {
         settings: 'Paramètres',
         language: 'Langue',
         theme: 'Thème',
-        batteryLevels: 'Niveaux de batterie'
+        batteryLevels: 'Niveaux de batterie',
+        collapse: 'Réduire',
+        expand: 'Développer',
+        sponsorTitle: 'Ce site sera toujours gratuit',
+        sponsorText1: 'et cet espace attend une entreprise',
+        sponsorText2: 'souhaitant placer son logo ici avec le titre',
+        sponsorBadge: 'fier sponsor'
     },
     es: {
         appTitle: 'EV Assist',
@@ -148,7 +172,13 @@ export const translations: Record<Locale, Translations> = {
         settings: 'Ajustes',
         language: 'Idioma',
         theme: 'Tema',
-        batteryLevels: 'Niveles de batería'
+        batteryLevels: 'Niveles de batería',
+        collapse: 'Contraer',
+        expand: 'Expandir',
+        sponsorTitle: 'Este sitio siempre será gratuito',
+        sponsorText1: 'y este espacio espera una empresa',
+        sponsorText2: 'dispuesta a colocar su logo aquí con el título',
+        sponsorBadge: 'orgulloso patrocinador'
     },
     it: {
         appTitle: 'EV Assist',
@@ -177,6 +207,12 @@ export const translations: Record<Locale, Translations> = {
         settings: 'Impostazioni',
         language: 'Lingua',
         theme: 'Tema',
-        batteryLevels: 'Livelli della batteria'
+        batteryLevels: 'Livelli della batteria',
+        collapse: 'Comprimi',
+        expand: 'Espandi',
+        sponsorTitle: 'Questo sito sarà sempre gratuito',
+        sponsorText1: 'e questo spazio attende un azienda',
+        sponsorText2: 'disposta a inserire qui il proprio logo con il titolo',
+        sponsorBadge: 'orgoglioso sponsor'
     }
 };

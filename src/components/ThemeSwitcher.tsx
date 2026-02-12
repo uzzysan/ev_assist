@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 
+const applyTheme = (theme: 'light' | 'dark') => {
+    document.documentElement.setAttribute('data-theme', theme);
+};
+
 const getInitialTheme = (): 'light' | 'dark' => {
     if (typeof window === 'undefined') return 'light';
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
     if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
         return savedTheme;
     }
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.setAttribute('data-theme', 'dark');
         return 'dark';
     }
     return 'light';
@@ -17,10 +19,16 @@ const getInitialTheme = (): 'light' | 'dark' => {
 export const ThemeSwitcher: React.FC = () => {
     const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme);
 
+    // Apply theme on mount to ensure DOM is ready
+    React.useEffect(() => {
+        applyTheme(theme);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
+        applyTheme(newTheme);
         localStorage.setItem('theme', newTheme);
     };
 
