@@ -1,0 +1,16 @@
+---
+# Codacy configuration file
+# Documentation: https://docs.codacy.com/repositories-configure/codacy-configuration-file/
+
+# Exclude ESLint tool as the project uses modern ES2015+ features (TypeScript + React + Vite)
+# and has its own eslint.config.js configuration
+tools:
+  eslint:
+    enabled: false
+
+# Alternative: keep ESLint enabled but disable specific patterns
+# engines:
+#   eslint:
+#     exclude_paths:
+#       - "src/**"
+#     enabled: true
