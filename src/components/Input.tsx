@@ -6,15 +6,21 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     error?: string;
 }
 
+let inputCounter = 0;
+
 export const Input: React.FC<InputProps> = ({ label, suffix, error, style, id, ...props }) => {
     // Generate a fallback ID if none provided, to ensure accessibility
-    const inputId = id || `input-${label.replace(/\s+/g, '-').toLowerCase()}-${Math.random().toString(36).substr(2, 9)}`;
+    const [inputId] = React.useState(() => id || `input-${label.replace(/\s+/g, '-').toLowerCase()}-${++inputCounter}`);
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', ...style }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem', width: '100%', ...style }}>
             <label
                 htmlFor={inputId}
-                style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-color)', opacity: 0.8 }}
+                style={{ 
+                    fontSize: 'clamp(0.8rem, 3.5vw, 0.875rem)', 
+                    fontWeight: 500, 
+                    color: 'var(--text-muted)',
+                }}
             >
                 {label}
             </label>
@@ -24,31 +30,43 @@ export const Input: React.FC<InputProps> = ({ label, suffix, error, style, id, .
                     {...props}
                     style={{
                         width: '100%',
-                        padding: '0.75rem',
-                        paddingRight: suffix ? '3rem' : '0.75rem',
-                        borderRadius: '0.5rem',
-                        border: `1px solid ${error ? '#ef4444' : 'var(--border-color)'}`,
+                        padding: 'clamp(0.875rem, 3.5vw, 1rem)',
+                        paddingRight: suffix ? '3.5rem' : 'clamp(0.875rem, 3.5vw, 1rem)',
+                        borderRadius: 'var(--radius-lg)',
+                        border: `2px solid ${error ? 'var(--error-color)' : 'var(--border-color)'}`,
                         backgroundColor: 'var(--input-bg)',
                         color: 'var(--text-color)',
-                        fontSize: '1rem',
-                        fontFamily: 'var(--font-mono)', // Technical feel for numbers
+                        fontSize: 'clamp(1rem, 4vw, 1.125rem)',
+                        fontFamily: 'var(--font-mono)',
+                        fontWeight: 500,
                         outline: 'none',
+                        transition: 'border-color var(--transition-fast), box-shadow var(--transition-fast)',
+                        minHeight: '48px', // Minimum touch target size
+                    }}
+                    onFocus={(e) => {
+                        e.currentTarget.style.borderColor = 'var(--input-focus-border)';
+                        e.currentTarget.style.boxShadow = '0 0 0 3px var(--input-focus-shadow)';
+                    }}
+                    onBlur={(e) => {
+                        e.currentTarget.style.borderColor = error ? 'var(--error-color)' : 'var(--border-color)';
+                        e.currentTarget.style.boxShadow = 'none';
                     }}
                 />
                 {suffix && (
                     <span style={{
                         position: 'absolute',
                         right: '1rem',
-                        fontSize: '0.875rem',
-                        color: 'var(--text-color)',
-                        opacity: 0.6,
-                        pointerEvents: 'none'
+                        fontSize: 'clamp(0.875rem, 3.5vw, 1rem)',
+                        fontWeight: 600,
+                        color: 'var(--text-muted)',
+                        pointerEvents: 'none',
+                        fontFamily: 'var(--font-mono)',
                     }}>
                         {suffix}
                     </span>
                 )}
             </div>
-            {error && <span style={{ fontSize: '0.75rem', color: '#ef4444' }}>{error}</span>}
+            {error && <span style={{ fontSize: '0.75rem', color: 'var(--error-color)', fontWeight: 500 }}>{error}</span>}
         </div>
     );
 };

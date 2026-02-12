@@ -1,36 +1,205 @@
 :root {
-  /* Colors */
-  --primary-color: #00bfa5; /* Teal Accent */
-  --primary-hover: #009688;
+  /* Primary Brand Colors - Electric Teal/Cyan */
+  --primary-color: #00d4aa;
+  --primary-hover: #00b894;
+  --primary-glow: rgba(0, 212, 170, 0.3);
   
-  /* Light Theme Defaults */
-  --bg-color: #f0f2f5; /* Ash Gray / Popielaty */
-  --text-color: #1a1a1a;
+  /* Light Theme - Elegant Blue-Gray Gradient */
+  --bg-color: #f0f4f8;
+  --bg-gradient-start: #f5f7fa;
+  --bg-gradient-end: #d9e2ec;
+  --text-color: #0f172a;
+  --text-muted: #64748b;
   --card-bg: #ffffff;
-  --border-color: #d1d5db;
+  --card-border: rgba(226, 232, 240, 0.8);
+  --border-color: #cbd5e1;
   --input-bg: #ffffff;
+  --input-focus-border: #00d4aa;
+  --input-focus-shadow: rgba(0, 212, 170, 0.15);
+  
+  /* Info Banner - Light Theme */
+  --info-banner-gradient-start: #00d4aa;
+  --info-banner-gradient-end: #0891b2;
+  --info-banner-title: #ffffff;
+  --info-banner-text: rgba(255, 255, 255, 0.95);
+  --info-banner-border: rgba(255, 255, 255, 0.2);
+  --info-banner-shadow: rgba(0, 212, 170, 0.25);
+  --info-banner-glow: rgba(255, 255, 255, 0.5);
+  --info-banner-icon-bg: rgba(255, 255, 255, 0.95);
+  --info-banner-icon-shadow: rgba(0, 0, 0, 0.15);
+  --info-banner-badge-bg: rgba(255, 255, 255, 0.15);
+  --info-banner-badge-text: #ffffff;
+  --info-banner-badge-border: rgba(255, 255, 255, 0.25);
+  
+  /* Status Colors */
+  --success-color: #10b981;
+  --success-bg: #d1fae5;
+  --success-border: #6ee7b7;
+  --warning-color: #f59e0b;
+  --warning-bg: #fef3c7;
+  --warning-border: #fbbf24;
+  --error-color: #ef4444;
+  --error-bg: #fee2e2;
+  --error-border: #f87171;
+  
+  /* Shadows & Effects */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px var(--primary-glow);
   
   /* Typography */
-  --font-family: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
 }
 
 [data-theme='dark'] {
-  --bg-color: #1e2329; /* Dark Blue-Gray */
-  --text-color: #e0e6ed;
-  --card-bg: #2b323b;
-  --border-color: #374151;
-  --input-bg: #2b323b;
+  /* Dark Theme - Deep & Electric */
+  --bg-color: #0f172a;
+  --bg-gradient-start: #1e293b;
+  --bg-gradient-end: #0f172a;
+  --text-color: #f1f5f9;
+  --text-muted: #94a3b8;
+  --card-bg: #1e293b;
+  --card-border: rgba(51, 65, 85, 0.8);
+  --border-color: #334155;
+  --input-bg: #334155;
+  --input-focus-border: #00d4aa;
+  --input-focus-shadow: rgba(0, 212, 170, 0.2);
+  
+  /* Info Banner - Dark Theme */
+  --info-banner-gradient-start: #0891b2;
+  --info-banner-gradient-end: #0e7490;
+  --info-banner-title: #ffffff;
+  --info-banner-text: rgba(255, 255, 255, 0.9);
+  --info-banner-border: rgba(255, 255, 255, 0.1);
+  --info-banner-shadow: rgba(0, 0, 0, 0.4);
+  --info-banner-glow: rgba(0, 212, 170, 0.3);
+  --info-banner-icon-bg: rgba(15, 23, 42, 0.8);
+  --info-banner-icon-shadow: rgba(0, 0, 0, 0.3);
+  --info-banner-badge-bg: rgba(255, 255, 255, 0.1);
+  --info-banner-badge-text: #ffffff;
+  --info-banner-badge-border: rgba(255, 255, 255, 0.15);
+  
+  /* Shadows for dark theme */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background-color: var(--bg-color);
+  background-image: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  background-attachment: fixed;
   color: var(--text-color);
   font-family: var(--font-family);
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color var(--transition-slow), color var(--transition-slow);
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection color */
+::selection {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Input autofill styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-color);
+  -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Mobile touch improvements */
+@media (pointer: coarse) {
+  button,
+  input,
+  select,
+  label {
+    touch-action: manipulation;
+  }
+  
+  /* Larger touch targets on mobile */
+  input[type="radio"],
+  input[type="checkbox"] {
+    min-width: 20px;
+    min-height: 20px;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

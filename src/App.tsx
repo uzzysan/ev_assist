@@ -1,44 +1,48 @@
 import React from 'react';
-import { I18nProvider, useI18n } from './i18n';
+import { I18nProvider } from './i18n';
 import { Logo } from './components/Logo';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { Calculator } from './components/Calculator';
 import { Footer } from './components/Footer';
 import { SponsorBox } from './components/SponsorBox';
+import { InfoBanner } from './components/InfoBanner';
 
 const Layout: React.FC = () => {
-  const { t } = useI18n();
   return (
-    <div className="min-h-screen flex flex-col" style={{ padding: '1rem' }}>
+    <div className="min-h-screen flex flex-col" style={{ padding: '0.75rem' }}>
       <SponsorBox />
+      
+      {/* Top Bar - Language & Theme Switchers */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        gap: '0.75rem',
+        maxWidth: '800px',
+        margin: '0 auto',
+        width: '100%',
+        paddingTop: '0.5rem',
+        paddingBottom: '0.5rem',
+      }}>
+        <LanguageSwitcher />
+        <ThemeSwitcher />
+      </div>
+      
+      {/* Info Banner - nowoczesna ramka informacyjna */}
+      <InfoBanner />
+      
       <header style={{
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: '1rem',
+        marginBottom: '0.75rem',
         maxWidth: '800px',
-        margin: '0 auto 1rem auto',
+        margin: '0 auto 0.75rem auto',
         width: '100%',
-        paddingTop: '1rem'
       }}>
         <Logo />
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <LanguageSwitcher />
-          <ThemeSwitcher />
-        </div>
       </header>
-
-      <div style={{
-        maxWidth: '800px',
-        margin: '0 auto 2rem auto',
-        width: '100%',
-        textAlign: 'center',
-        color: 'var(--text-color)',
-        opacity: 0.8
-      }}>
-        {t('appDescription')}
-      </div>
 
       <main style={{ flex: 1, width: '100%', maxWidth: '800px', margin: '0 auto' }}>
         <Calculator />

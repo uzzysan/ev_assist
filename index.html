@@ -1,39 +1,104 @@
 <!doctype html>
 <html lang="en">
-<meta charset="UTF-8" />
-<link rel="icon" type="image/svg+xml" href="/vite.svg" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description"
-  content="EV Assist - Your personal electric vehicle journey planner. Calculate battery charge needed based on consumption and distance." />
-<meta name="keywords"
-  content="EV, electric vehicle, trip planner, battery calculator, range calculator, EV range, battery charge" />
-<meta name="author" content="Rafał Maculewicz" />
-<meta name="theme-color" content="#10b981" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  
+  <!-- Primary Meta Tags -->
+  <title>EV Assist - Electric Vehicle Charging Calculator & Trip Planner</title>
+  <meta name="title" content="EV Assist - Electric Vehicle Charging Calculator & Trip Planner" />
+  <meta name="description"
+    content="Free EV charging calculator. Calculate exactly how much battery charge you need for your electric vehicle trip. Works offline, supports all EV models. Perfect for charging station stops!" />
+  <meta name="keywords"
+    content="EV calculator, electric vehicle charging, EV trip planner, battery charge calculator, EV range calculator, electric car charging, kWh calculator, EV charging station, Tesla charging, EV battery planner" />
+  <meta name="author" content="Rafał Maculewicz" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="English" />
+  <meta name="revisit-after" content="7 days" />
+  
+  <!-- Theme Color for Mobile Browsers -->
+  <meta name="theme-color" content="#00d4aa" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0891b2" media="(prefers-color-scheme: dark)" />
+  
+  <!-- Mobile App Capable -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="EV Assist" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ev-assist.maculewicz.pro/" />
+  
+  <!-- Alternate Languages -->
+  <link rel="alternate" hreflang="en" href="https://ev-assist.maculewicz.pro/" />
+  <link rel="alternate" hreflang="pl" href="https://ev-assist.maculewicz.pro/?lang=pl" />
+  <link rel="alternate" hreflang="de" href="https://ev-assist.maculewicz.pro/?lang=de" />
+  <link rel="alternate" hreflang="fr" href="https://ev-assist.maculewicz.pro/?lang=fr" />
+  <link rel="alternate" hreflang="es" href="https://ev-assist.maculewicz.pro/?lang=es" />
+  <link rel="alternate" hreflang="it" href="https://ev-assist.maculewicz.pro/?lang=it" />
+  <link rel="alternate" hreflang="x-default" href="https://ev-assist.maculewicz.pro/" />
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://ev-assist.maculewicz.pro/" />
-<meta property="og:title" content="EV Assist - Electric Vehicle Trip Planner" />
-<meta property="og:description"
-  content="Calculate necessary battery charge for your EV trip based on consumption and distance." />
-<meta property="og:image" content="https://ev-assist.maculewicz.pro/og-image.png" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ev-assist.maculewicz.pro/" />
+  <meta property="og:title" content="EV Assist - Electric Vehicle Charging Calculator" />
+  <meta property="og:description"
+    content="Calculate exactly how much battery charge you need for your EV trip. Free, works offline, supports all electric vehicle models." />
+  <meta property="og:image" content="https://ev-assist.maculewicz.pro/og-image.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="EV Assist" />
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content="https://ev-assist.maculewicz.pro/" />
-<meta property="twitter:title" content="EV Assist - Electric Vehicle Trip Planner" />
-<meta property="twitter:description"
-  content="Calculate necessary battery charge for your EV trip based on consumption and distance." />
-<meta property="twitter:image" content="https://ev-assist.maculewicz.pro/og-image.png" />
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ev-assist.maculewicz.pro/" />
+  <meta property="twitter:title" content="EV Assist - EV Charging Calculator" />
+  <meta property="twitter:description"
+    content="Calculate exactly how much battery charge you need for your EV trip. Free, works offline!" />
+  <meta property="twitter:image" content="https://ev-assist.maculewicz.pro/og-image.png" />
 
-<link rel="canonical" href="https://ev-assist.maculewicz.pro/" />
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
-  rel="stylesheet">
-<title>EV Assist - EV Trip Planner & Battery Calculator</title>
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  
+  <!-- Fonts with display=swap for performance -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  
+  <!-- Structured Data / JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "EV Assist",
+    "description": "Free electric vehicle charging calculator. Calculate exactly how much battery charge you need for your trip.",
+    "url": "https://ev-assist.maculewicz.pro/",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "EV battery charge calculation",
+      "Trip planning",
+      "Offline support",
+      "Multiple language support",
+      "Works on all devices"
+    ],
+    "author": {
+      "@type": "Person",
+      "name": "Rafał Maculewicz"
+    }
+  }
+  </script>
 </head>
 
 <body>

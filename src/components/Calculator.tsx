@@ -1,6 +1,4 @@
-// No changes needed in Calculator.tsx directly regarding accessibility if Input component handles it correctly.
-// I will inspect Input.tsx next.
-
+import React, { useState } from 'react';
 import { useI18n } from '../i18n';
 import { calculateCharge, type CalculationResult, type CapacityType } from '../logic/calculate';
 import { Card } from './Card';
@@ -41,27 +39,14 @@ export const Calculator: React.FC = () => {
         setResult(res);
     };
 
-    // Helper for radio buttons
-    const RadioOption = ({ value, label }: { value: CapacityType; label: string }) => (
-        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: 'var(--text-color)' }}>
-            <input
-                type="radio"
-                name="capacityType"
-                value={value}
-                checked={capacityType === value}
-                onChange={() => setCapacityType(value)}
-                style={{ accentColor: 'var(--primary-color)' }}
-            />
-            {label}
-        </label>
-    );
+
 
     return (
-        <div style={{ maxWidth: '600px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div style={{ maxWidth: '600px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(1rem, 4vw, 1.5rem)' }}>
 
             {/* Consumption Section */}
-            <Card title={t('averageConsumption')}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <Card title={`🔌 ${t('averageConsumption')}`}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 'clamp(0.75rem, 3vw, 1rem)' }}>
                     <Input
                         label={t('consumptionHint')}
                         value={avgConsumption}
@@ -80,8 +65,8 @@ export const Calculator: React.FC = () => {
             </Card>
 
             {/* Trip & Battery Section */}
-            <Card>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <Card title={`🚗 ${t('destinationDistanceHint')}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(0.75rem, 3vw, 1rem)' }}>
                     <Input
                         label={t('destinationDistanceHint')}
                         value={destinationDistance}
@@ -90,7 +75,7 @@ export const Calculator: React.FC = () => {
                         suffix="km"
                     />
 
-                    <div style={{ height: '1px', background: 'var(--border-color)', margin: '0.5rem 0' }} />
+                    <div style={{ height: '2px', background: 'linear-gradient(90deg, transparent, var(--border-color), transparent)', margin: '0.25rem 0' }} />
 
                     <Input
                         label={t('totalBatteryCapacity')}
@@ -100,16 +85,36 @@ export const Calculator: React.FC = () => {
                         suffix="kWh"
                     />
 
-                    <div style={{ display: 'flex', gap: '2rem', marginTop: '0.5rem' }}>
-                        <RadioOption value="net" label={t('net')} />
-                        <RadioOption value="gross" label={t('gross')} />
+                    <div style={{ display: 'flex', gap: 'clamp(1rem, 4vw, 2rem)', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: 'var(--text-color)', fontSize: 'clamp(0.9rem, 3.5vw, 1rem)' }}>
+                            <input
+                                type="radio"
+                                name="capacityType"
+                                value="net"
+                                checked={capacityType === 'net'}
+                                onChange={() => setCapacityType('net')}
+                                style={{ accentColor: 'var(--primary-color)', width: '18px', height: '18px' }}
+                            />
+                            {t('net')}
+                        </label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: 'var(--text-color)', fontSize: 'clamp(0.9rem, 3.5vw, 1rem)' }}>
+                            <input
+                                type="radio"
+                                name="capacityType"
+                                value="gross"
+                                checked={capacityType === 'gross'}
+                                onChange={() => setCapacityType('gross')}
+                                style={{ accentColor: 'var(--primary-color)', width: '18px', height: '18px' }}
+                            />
+                            {t('gross')}
+                        </label>
                     </div>
                 </div>
             </Card>
 
             {/* Levels Section */}
-            <Card title={t('batteryLevels')}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <Card title={`🔋 ${t('batteryLevels')}`}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 'clamp(0.75rem, 3vw, 1rem)' }}>
                     <Input
                         label={t('currentBatteryLevel')}
                         value={currentLevel}
@@ -130,17 +135,36 @@ export const Calculator: React.FC = () => {
             {/* Result Section */}
             {result && (
                 <div style={{
-                    backgroundColor: result.isImpossible ? '#fee2e2' : result.isWarning ? '#fef3c7' : '#d1fae5',
-                    color: result.isImpossible ? '#991b1b' : result.isWarning ? '#92400e' : '#065f46',
-                    padding: '1rem',
-                    borderRadius: '0.5rem',
-                    border: `1px solid ${result.isImpossible ? '#f87171' : result.isWarning ? '#fbbf24' : '#34d399'}`,
+                    background: result.isImpossible 
+                        ? 'linear-gradient(135deg, var(--error-bg) 0%, #fecaca 100%)' 
+                        : result.isWarning 
+                            ? 'linear-gradient(135deg, var(--warning-bg) 0%, #fde68a 100%)' 
+                            : 'linear-gradient(135deg, var(--success-bg) 0%, #a7f3d0 100%)',
+                    color: result.isImpossible ? 'var(--error-color)' : result.isWarning ? 'var(--warning-color)' : 'var(--success-color)',
+                    padding: 'clamp(1rem, 4vw, 1.25rem)',
+                    borderRadius: 'var(--radius-xl)',
+                    border: `2px solid ${result.isImpossible ? 'var(--error-border)' : result.isWarning ? 'var(--warning-border)' : 'var(--success-border)'}`,
+                    boxShadow: 'var(--shadow-md)',
+                    animation: 'slideInUp 0.3s ease-out',
                 }}>
-                    <h4 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        {/* Icons could be added here */}
-                        {result.isImpossible || result.isWarning ? '⚠️ ' + t('warningTitle') : '✅ ' + t('resultTitle')}
+                    <h4 style={{ 
+                        fontSize: 'clamp(1rem, 4vw, 1.15rem)', 
+                        marginTop: 0,
+                        marginBottom: '0.5rem', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: '0.5rem',
+                        fontWeight: 700,
+                    }}>
+                        {result.isImpossible ? '🚫' : result.isWarning ? '⚠️' : '✅'}
+                        {result.isImpossible || result.isWarning ? t('warningTitle') : t('resultTitle')}
                     </h4>
-                    <p style={{ margin: 0 }}>
+                    <p style={{ 
+                        margin: 0, 
+                        fontSize: 'clamp(0.95rem, 4vw, 1.05rem)',
+                        fontWeight: 500,
+                        lineHeight: 1.5,
+                    }}>
                         {result.isImpossible
                             ? t('destinationOutOfReach')
                             : result.isWarning
@@ -150,8 +174,20 @@ export const Calculator: React.FC = () => {
                     </p>
                 </div>
             )}
+            <style>{`
+                @keyframes slideInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(10px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `}</style>
 
-            <Button onClick={handleCalculate} style={{ marginTop: '0.5rem' }}>
+            <Button onClick={handleCalculate} style={{ marginTop: '0.25rem' }} icon="⚡">
                 {t('calculate')}
             </Button>
 

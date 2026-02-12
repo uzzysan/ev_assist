@@ -10,18 +10,24 @@ export const Card: React.FC<CardProps> = ({ title, children }) => {
     return (
         <div style={{
             backgroundColor: 'var(--card-bg)',
-            borderRadius: '1rem',
-            padding: '1.5rem',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+            borderRadius: 'var(--radius-xl)',
+            padding: 'clamp(1rem, 4vw, 1.5rem)',
+            boxShadow: 'var(--shadow-md)',
+            border: '1px solid var(--card-border)',
             width: '100%',
-            marginBottom: '1rem'
+            marginBottom: '1rem',
+            transition: 'transform var(--transition-base), box-shadow var(--transition-base)',
         }}>
             {title && (
                 <h3 style={{
+                    marginTop: 0,
                     marginBottom: '1rem',
-                    fontSize: '1.125rem',
+                    fontSize: 'clamp(1rem, 4vw, 1.125rem)',
                     fontWeight: 600,
-                    opacity: 0.9
+                    color: 'var(--text-color)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
                 }}>
                     {title}
                 </h3>

@@ -1,158 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-
-// Simple translation maps
-// In a real app, strict typing or library like i18next is better, but for this scope custom is fine.
-
-export type Locale = 'en' | 'pl' | 'de' | 'fr' | 'es' | 'it';
-
-type Translations = Record<string, string>;
-
-const translations: Record<Locale, Translations> = {
-    en: {
-        appTitle: 'EV Assist',
-        appDescription: 'EV Assist helps you plan your journey by calculating necessary battery charge based on consumption and distance.',
-        averageConsumption: 'Average Consumption',
-        consumptionHint: 'Consumption (kWh)',
-        distanceHint: 'from last km',
-        destinationDistanceHint: 'Distance to destination',
-        totalBatteryCapacity: 'Total Battery Capacity',
-        net: 'Net',
-        gross: 'Gross',
-        currentBatteryLevel: 'Current Level',
-        desiredArrivalLevel: 'Desired Arrival Level',
-        calculate: 'Calculate',
-        supportAuthorButton: 'Support me',
-        warningTitle: 'Warning',
-        resultTitle: 'Result', // "Charge needed"
-        chargeMessage: 'You need to charge: {0} kWh',
-        errorMessage: 'You need {0} kWh, which is more than battery capacity!',
-        destinationOutOfReach: 'Destination out of reach even with full charge!',
-        settings: 'Settings',
-        language: 'Language',
-        theme: 'Theme',
-        batteryLevels: 'Battery Levels'
-    },
-    pl: {
-        appTitle: 'EV Assist',
-        appDescription: 'EV Assist pomaga zaplanować podróż obliczając potrzebne naładowanie baterii na podstawie zużycia i dystansu.',
-        averageConsumption: 'Średnie zużycie',
-        consumptionHint: 'Zużycie (kWh)',
-        distanceHint: 'z ostatnich km',
-        destinationDistanceHint: 'Odległość do celu',
-        totalBatteryCapacity: 'Pojemność baterii',
-        net: 'Netto',
-        gross: 'Brutto',
-        currentBatteryLevel: 'Obecny poziom',
-        desiredArrivalLevel: 'Poziom u celu',
-        calculate: 'Oblicz',
-        supportAuthorButton: 'Wspieram to co robisz',
-        warningTitle: 'Uwaga',
-        resultTitle: 'Wynik',
-        chargeMessage: 'Musisz naładować: {0} kWh',
-        errorMessage: 'Potrzebujesz {0} kWh, to więcej niż pojemność baterii!',
-        destinationOutOfReach: 'Cel poza zasięgiem nawet przy pełnej baterii!',
-        settings: 'Ustawienia',
-        language: 'Język',
-        theme: 'Motyw',
-        batteryLevels: 'Poziom baterii'
-    },
-    de: { // Minimal placeholders
-        appTitle: 'EV Assist',
-        appDescription: 'EV Assist hilft Ihnen bei der Reiseplanung, indem es die erforderliche Batterieladung basierend auf Verbrauch und Entfernung berechnet.',
-        averageConsumption: 'Durchschnittsverbrauch',
-        consumptionHint: 'Verbrauch (kWh)',
-        distanceHint: 'auf letzten km',
-        destinationDistanceHint: 'Entfernung zum Ziel',
-        totalBatteryCapacity: 'Batteriekapazität',
-        net: 'Netto',
-        gross: 'Brutto',
-        currentBatteryLevel: 'Aktueller Stand',
-        desiredArrivalLevel: 'Gewünschter Stand',
-        calculate: 'Berechnen',
-        supportAuthorButton: 'Unterstütze mich',
-        warningTitle: 'Warnung',
-        resultTitle: 'Ergebnis',
-        chargeMessage: 'Sie müssen laden: {0} kWh',
-        errorMessage: 'Sie benötigen {0} kWh, mehr als die Kapazität!',
-        destinationOutOfReach: 'Ziel außerhalb der Reichweite!',
-        settings: 'Einstellungen',
-        language: 'Sprache',
-        theme: 'Thema',
-        batteryLevels: 'Batteriestand'
-    },
-    fr: {
-        appTitle: 'EV Assist',
-        appDescription: 'EV Assist vous aide à planifier votre trajet en calculant la charge de batterie nécessaire en fonction de la consommation et de la distance.',
-        averageConsumption: 'Consommation moyenne',
-        consumptionHint: 'Consom. (kWh)',
-        distanceHint: 'sur les derniers km',
-        destinationDistanceHint: 'Distance à destination',
-        totalBatteryCapacity: 'Capacité batterie',
-        net: 'Net',
-        gross: 'Brut',
-        currentBatteryLevel: 'Niveau actuel',
-        desiredArrivalLevel: 'Niveau souhaité',
-        calculate: 'Calculer',
-        supportAuthorButton: 'Soutenez-moi',
-        warningTitle: 'Attention',
-        resultTitle: 'Résultat',
-        chargeMessage: 'Vous devez charger : {0} kWh',
-        errorMessage: 'Vous avez besoin de {0} kWh, plus que la capacité !',
-        destinationOutOfReach: 'Destination hors de portée !',
-        settings: 'Paramètres',
-        language: 'Langue',
-        theme: 'Thème',
-        batteryLevels: 'Niveaux de batterie'
-    },
-    es: {
-        appTitle: 'EV Assist',
-        appDescription: 'EV Assist te ayuda a planificar tu viaje calculando la carga de batería necesaria según el consumo y la distancia.',
-        averageConsumption: 'Consumo medio',
-        consumptionHint: 'Consumo (kWh)',
-        distanceHint: 'de últimos km',
-        destinationDistanceHint: 'Distancia al destino',
-        totalBatteryCapacity: 'Capacidad batería',
-        net: 'Neto',
-        gross: 'Bruto',
-        currentBatteryLevel: 'Nivel actual',
-        desiredArrivalLevel: 'Nivel deseado',
-        calculate: 'Calcular',
-        supportAuthorButton: 'Apóyame',
-        warningTitle: 'Advertencia',
-        resultTitle: 'Resultado',
-        chargeMessage: 'Necesitas cargar: {0} kWh',
-        errorMessage: 'Necesitas {0} kWh, ¡más que la capacidad!',
-        destinationOutOfReach: '¡Destino fuera de alcance!',
-        settings: 'Ajustes',
-        language: 'Idioma',
-        theme: 'Tema',
-        batteryLevels: 'Niveles de batería'
-    },
-    it: {
-        appTitle: 'EV Assist',
-        appDescription: 'EV Assist ti aiuta a pianificare il tuo viaggio calcolando la carica della batteria necessaria in base al consumo e alla distanza.',
-        averageConsumption: 'Consumo medio',
-        consumptionHint: 'Consumo (kWh)',
-        distanceHint: 'dagli ultimi km',
-        destinationDistanceHint: 'Distanza dalla destinazione',
-        totalBatteryCapacity: 'Capacità batteria',
-        net: 'Netto',
-        gross: 'Lordo',
-        currentBatteryLevel: 'Livello attuale',
-        desiredArrivalLevel: 'Livello desiderato',
-        calculate: 'Calcola',
-        supportAuthorButton: 'Supportami',
-        warningTitle: 'Attenzione',
-        resultTitle: 'Risultato',
-        chargeMessage: 'Devi caricare: {0} kWh',
-        errorMessage: 'Hai bisogno di {0} kWh, più della capacità!',
-        destinationOutOfReach: 'Destinazione fuori portata!',
-        settings: 'Impostazioni',
-        language: 'Lingua',
-        theme: 'Tema',
-        batteryLevels: 'Livelli della batteria'
-    }
-};
+import React, { createContext, useContext, useState } from 'react';
+import { translations } from './translations';
+import type { Locale } from './translations';
 
 interface I18nContextType {
     locale: Locale;
@@ -162,21 +10,22 @@ interface I18nContextType {
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
-export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [locale, setLocale] = useState<Locale>('en');
+const getInitialLocale = (): Locale => {
+    if (typeof window === 'undefined') return 'en';
+    const saved = localStorage.getItem('locale') as Locale;
+    if (saved && translations[saved]) {
+        return saved;
+    }
+    // detect browser language
+    const browserLang = navigator.language.split('-')[0] as Locale;
+    if (translations[browserLang]) {
+        return browserLang;
+    }
+    return 'en';
+};
 
-    useEffect(() => {
-        const saved = localStorage.getItem('locale') as Locale;
-        if (saved && translations[saved]) {
-            setLocale(saved);
-        } else {
-            // detect browser language
-            const browserLang = navigator.language.split('-')[0] as Locale;
-            if (translations[browserLang]) {
-                setLocale(browserLang);
-            }
-        }
-    }, []);
+export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [locale, setLocale] = useState<Locale>(getInitialLocale);
 
     const changeLocale = (l: Locale) => {
         setLocale(l);
@@ -200,6 +49,7 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useI18n = () => {
     const context = useContext(I18nContext);
     if (!context) {
