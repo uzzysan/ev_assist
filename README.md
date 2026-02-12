@@ -1,5 +1,7 @@
 # React + TypeScript + Vite
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/478205d2784c49df8d94ae8097fd3caa)](https://app.codacy.com/gh/uzzysan/ev_assist?utm_source=github.com&utm_medium=referral&utm_content=uzzysan/ev_assist&utm_campaign=Badge_Grade)
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
