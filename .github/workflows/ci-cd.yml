@@ -66,16 +66,20 @@ jobs:
         run: npm run build
 
       - name: Deploy to VPS
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT || 22 }}
-          source: "dist/"
-          target: /opt/ev_assist/
-          strip_components: 0
-          rm: true
+          script: |
+            cd /opt/ev_assist
+            git fetch origin
+            git checkout main
+            git pull origin main
+            npm ci
+            npm run build
+            echo "✅ EV Assist deployment completed!"
 
       - name: Verify deployment
         uses: appleboy/ssh-action@v1.0.3
@@ -86,4 +90,4 @@ jobs:
           port: ${{ secrets.SSH_PORT || 22 }}
           script: |
             ls -la /opt/ev_assist/dist/
-            echo "✅ EV Assist deployment completed!"
+            echo "✅ EV Assist deployment verified!"
