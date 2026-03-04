@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sun, Moon } from 'lucide-react';
 
 const applyTheme = (theme: 'light' | 'dark') => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -19,10 +21,8 @@ const getInitialTheme = (): 'light' | 'dark' => {
 export const ThemeSwitcher: React.FC = () => {
     const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme);
 
-    // Apply theme on mount to ensure DOM is ready
     React.useEffect(() => {
         applyTheme(theme);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const toggleTheme = () => {
@@ -33,23 +33,63 @@ export const ThemeSwitcher: React.FC = () => {
     };
 
     return (
-        <button
+        <motion.button
             onClick={toggleTheme}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
             style={{
-                background: 'transparent',
-                border: '1px solid var(--border-color)',
+                background: 'var(--card-bg)',
+                border: '2px solid var(--border-color)',
                 borderRadius: '50%',
-                width: '40px',
-                height: '40px',
+                width: '44px',
+                height: '44px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
-                color: 'var(--text-color)'
+                color: 'var(--text-color)',
+                position: 'relative',
+                overflow: 'hidden'
             }}
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
         >
-            {theme === 'light' ? '🌙' : '☀️'}
-        </button>
+            <AnimatePresence mode="wait">
+                {theme === 'light' ? (
+                    <motion.div
+                        key="moon"
+                        initial={{ rotate: -90, opacity: 0 }}
+                        animate={{ rotate: 0, opacity: 1 }}
+                        exit={{ rotate: 90, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <Moon size={20} />
+                    </motion.div>
+                ) : (
+                    <motion.div
+                        key="sun"
+                        initial={{ rotate: 90, opacity: 0 }}
+                        animate={{ rotate: 0, opacity: 1 }}
+                        exit={{ rotate: -90, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <Sun size={20} color="#fbbf24" />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            
+            {/* Glow effect */}
+            <motion.div
+                animate={{
+                    opacity: theme === 'dark' ? [0.3, 0.6, 0.3] : 0
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 70%)',
+                    pointerEvents: 'none'
+                }}
+            />
+        </motion.button>
     );
 };

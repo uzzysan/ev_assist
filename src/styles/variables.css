@@ -1,116 +1,211 @@
 :root {
-  /* Primary Brand Colors - Electric Teal/Cyan */
-  --primary-color: #00d4aa;
-  --primary-hover: #00b894;
-  --primary-glow: rgba(0, 212, 170, 0.3);
+  /* ========================================
+     EV ASSIST - MODERN COLOR SYSTEM
+     Electric Vibrant Theme with Wow Effects
+     ======================================== */
+
+  /* Primary - Electric Neon Teal */
+  --primary-color: #00d9c0;
+  --primary-hover: #00b8a3;
+  --primary-glow: rgba(0, 217, 192, 0.4);
+  --primary-light: #5fffe8;
+  --primary-dark: #00a88f;
   
-  /* Light Theme - Elegant Blue-Gray Gradient */
-  --bg-color: #f0f4f8;
-  --bg-gradient-start: #f5f7fa;
-  --bg-gradient-end: #d9e2ec;
+  /* Secondary - Electric Purple */
+  --secondary-color: #8b5cf6;
+  --secondary-glow: rgba(139, 92, 246, 0.3);
+  
+  /* Accent - Warm Orange */
+  --accent-color: #f97316;
+  --accent-glow: rgba(249, 115, 22, 0.3);
+
+  /* ========================================
+     LIGHT THEME - Fresh & Energetic
+     ======================================== */
+  --bg-color: #f8fafc;
+  --bg-gradient-start: #f0fdfa;
+  --bg-gradient-end: #e0f2fe;
+  --bg-gradient-mid: #dbeafe;
+  
   --text-color: #0f172a;
   --text-muted: #64748b;
+  --text-secondary: #475569;
+  
   --card-bg: #ffffff;
-  --card-border: rgba(226, 232, 240, 0.8);
+  --card-bg-hover: #f8fafc;
+  --card-border: rgba(148, 163, 184, 0.2);
+  --card-border-hover: rgba(0, 217, 192, 0.4);
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  
   --border-color: #cbd5e1;
+  --border-color-light: #e2e8f0;
+  
   --input-bg: #ffffff;
-  --input-focus-border: #00d4aa;
-  --input-focus-shadow: rgba(0, 212, 170, 0.15);
+  --input-bg-hover: #f8fafc;
+  --input-focus-border: #00d9c0;
+  --input-focus-shadow: rgba(0, 217, 192, 0.2);
   
   /* Info Banner - Light Theme */
-  --info-banner-gradient-start: #00d4aa;
-  --info-banner-gradient-end: #0891b2;
+  --info-banner-gradient-start: #00d9c0;
+  --info-banner-gradient-end: #0ea5e9;
+  --info-banner-gradient-mid: #8b5cf6;
   --info-banner-title: #ffffff;
   --info-banner-text: rgba(255, 255, 255, 0.95);
-  --info-banner-border: rgba(255, 255, 255, 0.2);
-  --info-banner-shadow: rgba(0, 212, 170, 0.25);
-  --info-banner-glow: rgba(255, 255, 255, 0.5);
+  --info-banner-border: rgba(255, 255, 255, 0.3);
+  --info-banner-shadow: rgba(0, 217, 192, 0.3);
+  --info-banner-glow: rgba(255, 255, 255, 0.6);
   --info-banner-icon-bg: rgba(255, 255, 255, 0.95);
-  --info-banner-icon-shadow: rgba(0, 0, 0, 0.15);
-  --info-banner-badge-bg: rgba(255, 255, 255, 0.15);
+  --info-banner-icon-shadow: rgba(0, 0, 0, 0.1);
+  --info-banner-badge-bg: rgba(255, 255, 255, 0.2);
   --info-banner-badge-text: #ffffff;
-  --info-banner-badge-border: rgba(255, 255, 255, 0.25);
+  --info-banner-badge-border: rgba(255, 255, 255, 0.3);
   
-  /* Status Colors */
+  /* ========================================
+     STATUS COLORS - Vibrant
+     ======================================== */
   --success-color: #10b981;
   --success-bg: #d1fae5;
-  --success-border: #6ee7b7;
+  --success-bg-light: #ecfdf5;
+  --success-border: #34d399;
+  --success-glow: rgba(16, 185, 129, 0.3);
+  
   --warning-color: #f59e0b;
   --warning-bg: #fef3c7;
+  --warning-bg-light: #fffbeb;
   --warning-border: #fbbf24;
+  --warning-glow: rgba(245, 158, 11, 0.3);
+  
   --error-color: #ef4444;
   --error-bg: #fee2e2;
+  --error-bg-light: #fef2f2;
   --error-border: #f87171;
+  --error-glow: rgba(239, 68, 68, 0.3);
   
-  /* Shadows & Effects */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  --shadow-glow: 0 0 20px var(--primary-glow);
+  /* ========================================
+     SHADOWS & EFFECTS
+     ======================================== */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 30px var(--primary-glow);
+  --shadow-glow-lg: 0 0 60px var(--primary-glow);
+  --shadow-colored: 0 10px 40px -10px rgba(0, 217, 192, 0.3);
   
-  /* Typography */
+  /* Glass Effect */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  
+  /* ========================================
+     TYPOGRAPHY
+     ======================================== */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
   
-  /* Spacing */
+  /* ========================================
+     SPACING
+     ======================================== */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
   
-  /* Border Radius */
+  /* ========================================
+     BORDER RADIUS
+     ======================================== */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.5rem;
   --radius-full: 9999px;
   
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-base: 200ms ease;
-  --transition-slow: 300ms ease;
+  /* ========================================
+     TRANSITIONS
+     ======================================== */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* ========================================
+   DARK THEME - Deep & Electric
+   ======================================== */
 [data-theme='dark'] {
-  /* Dark Theme - Deep & Electric */
-  --bg-color: #0f172a;
-  --bg-gradient-start: #1e293b;
-  --bg-gradient-end: #0f172a;
-  --text-color: #f1f5f9;
+  --bg-color: #0a0f1c;
+  --bg-gradient-start: #0f172a;
+  --bg-gradient-end: #1e293b;
+  --bg-gradient-mid: #1e1b4b;
+  
+  --text-color: #f8fafc;
   --text-muted: #94a3b8;
-  --card-bg: #1e293b;
-  --card-border: rgba(51, 65, 85, 0.8);
+  --text-secondary: #cbd5e1;
+  
+  --card-bg: rgba(30, 41, 59, 0.6);
+  --card-bg-hover: rgba(30, 41, 59, 0.8);
+  --card-border: rgba(148, 163, 184, 0.15);
+  --card-border-hover: rgba(0, 217, 192, 0.3);
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  
   --border-color: #334155;
-  --input-bg: #334155;
-  --input-focus-border: #00d4aa;
-  --input-focus-shadow: rgba(0, 212, 170, 0.2);
+  --border-color-light: #475569;
+  
+  --input-bg: rgba(51, 65, 85, 0.5);
+  --input-bg-hover: rgba(51, 65, 85, 0.7);
+  --input-focus-border: #00d9c0;
+  --input-focus-shadow: rgba(0, 217, 192, 0.25);
   
   /* Info Banner - Dark Theme */
   --info-banner-gradient-start: #0891b2;
-  --info-banner-gradient-end: #0e7490;
+  --info-banner-gradient-end: #7c3aed;
+  --info-banner-gradient-mid: #00d9c0;
   --info-banner-title: #ffffff;
   --info-banner-text: rgba(255, 255, 255, 0.9);
-  --info-banner-border: rgba(255, 255, 255, 0.1);
+  --info-banner-border: rgba(255, 255, 255, 0.15);
   --info-banner-shadow: rgba(0, 0, 0, 0.4);
-  --info-banner-glow: rgba(0, 212, 170, 0.3);
+  --info-banner-glow: rgba(0, 217, 192, 0.4);
   --info-banner-icon-bg: rgba(15, 23, 42, 0.8);
-  --info-banner-icon-shadow: rgba(0, 0, 0, 0.3);
+  --info-banner-icon-shadow: rgba(0, 0, 0, 0.4);
   --info-banner-badge-bg: rgba(255, 255, 255, 0.1);
   --info-banner-badge-text: #ffffff;
-  --info-banner-badge-border: rgba(255, 255, 255, 0.15);
+  --info-banner-badge-border: rgba(255, 255, 255, 0.2);
   
   /* Shadows for dark theme */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 30px rgba(0, 217, 192, 0.4);
+  --shadow-glow-lg: 0 0 60px rgba(0, 217, 192, 0.3);
+  --shadow-colored: 0 10px 40px -10px rgba(0, 217, 192, 0.2);
+  
+  /* Glass Effect Dark */
+  --glass-bg: rgba(30, 41, 59, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  
+  /* Status Colors Dark */
+  --success-bg: rgba(16, 185, 129, 0.15);
+  --success-bg-light: rgba(16, 185, 129, 0.1);
+  --warning-bg: rgba(245, 158, 11, 0.15);
+  --warning-bg-light: rgba(245, 158, 11, 0.1);
+  --error-bg: rgba(239, 68, 68, 0.15);
+  --error-bg-light: rgba(239, 68, 68, 0.1);
 }
 
-/* Base styles */
+/* ========================================
+   BASE STYLES
+   ======================================== */
 * {
   box-sizing: border-box;
 }
@@ -122,7 +217,10 @@ html {
 
 body {
   background-color: var(--bg-color);
-  background-image: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  background-image: 
+    radial-gradient(ellipse at 10% 20%, rgba(0, 217, 192, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   background-attachment: fixed;
   color: var(--text-color);
   font-family: var(--font-family);
@@ -184,7 +282,6 @@ input:-webkit-autofill:focus {
     touch-action: manipulation;
   }
   
-  /* Larger touch targets on mobile */
   input[type="radio"],
   input[type="checkbox"] {
     min-width: 20px;
@@ -201,5 +298,33 @@ input:-webkit-autofill:focus {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Electric glow animation */
+@keyframes electricPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--primary-glow), 0 0 10px var(--primary-glow);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--primary-glow), 0 0 30px var(--primary-glow);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
   }
 }
